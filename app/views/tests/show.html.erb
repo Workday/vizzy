@@ -1,0 +1,147 @@
+<% breadcrumb :test, @test %>
+<%= button_to 'Current Base Images', base_images_project_path(@test.project_id), :class => 'btn-primary btn pull-right' %>
+<br>
+<br>
+<div class="panel panel-default">
+  <div class="panel-heading accordion-toggle" role="button" data-parent="#accordion" data-toggle="collapse" href="#testHistoryPanel">
+    <h3 class="panel-title">Test Details</h3>
+  </div>
+  <div class="panel-collapse collapse in" id="testHistoryPanel">
+    <div class="panel-body">
+      <%= button_to 'Delete All Base Images For Test', remove_base_images_test_path(@test), :class => 'btn-danger btn pull-right' %>
+      <strong>Name: </strong><%= @test.name %>
+      <br>
+      <% if @test.description? %>
+        <strong>Description: </strong><%= @test.description %>
+        <br>
+      <% end %>
+      <% if @test.pull_request_link? %>
+        <strong>Pull Request: </strong>
+        <%= link_to @test.pull_request_link, @test.pull_request_link %>
+        <br>
+      <% end %>
+      <% if @test.jira? %>
+        <strong>Jira: </strong>
+        <%= link_to @test.jira, @test.jira %>
+        <br>
+      <% end %>
+      <% if @test.comment? %>
+        <strong>Comment: </strong>
+        <%= @test.comment %>
+        <br>
+      <% end %>
+      <% unless @test.parent.nil? %>
+        <strong>Parent Test: </strong>
+        <%= link_to @test.parent.name, test_path(@test.parent) %>
+        <br>
+      <% end %>
+      <% unless @test.children.blank? %>
+        <u><strong>Children</strong></u><br>
+        <% @test.children.each do |child_test| %>
+          <%= link_to child_test.name, test_path(child_test) %> <br>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% test_images_history = @test.test_image_history %>
+<% if test_images_history.size == 0 %>
+  <div class="alert alert-info">No test images associated with this test, please look at the children.</div>
+<% end %>
+
+<% base_image = test_images_history.shift %>
+<% unless base_image.nil? %>
+  <div class="panel panel-success">
+    <div class="panel-heading">
+      <div class="accordion-toggle" role="button" data-parent="#accordion" data-toggle="collapse" href="#baseImagePanel">
+        Current Base Image
+      </div>
+    </div>
+    <div class="panel-collapse collapse in" id="baseImagePanel">
+      <div class="panel-body">
+        <table class="table" id="table">
+          <colgroup>
+            <col class="col-md-4">
+            <col class="col-md-4">
+            <col class="col-md-4">
+          </colgroup>
+          <thead>
+          <tr>
+            <th>Image</th>
+            <th>Associated Build</th>
+            <th>Time Of Upload</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% base_image = @test.current_base_image %>
+          <% build = Build.find(base_image.build_id) %>
+          <tr>
+            <td><%= link_to image_tag(base_image.image.url(:thumbnail)), test_image_path(base_image) %></td>
+            <td><%= link_to build.title, build_path(build) %></td>
+            <td> <%= base_image.image_updated_at.strftime("%b %d, %Y %I:%M:%S %P ") %></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if test_images_history.size > 0 %>
+  <div class="panel panel-primary">
+    <button type="button"
+            class="btn btn-default glyphicon-spacing pull-right"
+            data-span-class-0="glyphicon-th-large"
+            data-span-class-1="glyphicon-th-list"
+            data-content-id-0="#table"
+            data-content-id-1="#panels"
+            onclick="togglePanel(this)"><span class="glyphicon glyphicon-th-large"></span></button>
+    <div class="panel-heading">
+      <div class="accordion-toggle" role="button" data-parent="#accordion" data-toggle="collapse" href="#historyPanel">
+        History Of Approved Images For <%= @test.name %>
+      </div>
+    </div>
+    <div class="panel-collapse collapse in" id="historyPanel">
+      <div class="panel-body">
+        <table class="table" id="table">
+          <colgroup>
+            <col class="col-md-4">
+            <col class="col-md-4">
+            <col class="col-md-4">
+          </colgroup>
+          <thead>
+          <tr>
+            <th>Image</th>
+            <th>Associated Build</th>
+            <th>Time Of Upload</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% test_images_history.each do |test_image| %>
+            <% build = Build.find(test_image.build_id) %>
+            <tr>
+              <td><%= link_to image_tag(test_image.image.url(:thumbnail)), test_image_path(test_image) %></td>
+              <td><%= link_to build.title, build_path(build) %></td>
+              <td> <%= test_image.image_updated_at.strftime("%b %d, %Y %I:%M:%S %P ") %></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <div class="row" id="panels" style="display: none">
+          <table class="table" id="table">
+            <tbody>
+            <% test_images_history.each do |test_image| %>
+              <div class="col-lg-3 col-md-4 col-xs-6">
+                <div class="thumbnail">
+                  <%= link_to image_tag(test_image.image.url(:small)), test_image_path(test_image) %>
+                </div>
+              </div>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

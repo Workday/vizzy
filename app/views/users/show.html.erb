@@ -1,0 +1,32 @@
+<% breadcrumb :user, @user %>
+<h2><%= @user.display_name %></h2>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">User Info</h3>
+  </div>
+  <div class="panel-body">
+    <% if current_user.admin? %>
+      <% if @user.role != :Owner %>
+        <%= button_to 'Delete', user_path(@user), :method => :delete, :remote => true, :class => 'btn-danger btn pull-right space-left', data: {:confirm => "Are you sure you want to delete #{@user.display_name}?"} %>
+      <% end %>
+      <% case @user.role %>
+    <% when :Admin %>
+        <%= button_to 'Remove Admin Rights', user_path(@user, :user => {:admin => false}), :method => :patch, :remote => true, :class => 'btn-danger btn pull-right' %>
+      <% when :Member %>
+        <%= button_to 'Grant Admin Rights', user_path(@user, :user => {:admin => true}), :method => :patch, :remote => true, :class => 'btn-success btn pull-right' %>
+      <% end %>
+    <% end %>
+    <strong>Email: </strong><%= @user.email %>
+    <br>
+    <strong>Role: </strong><%= @user.role %>
+    <br>
+    <% if @user == current_user %>
+      <br>
+      <%= button_to 'Show Authentication Token', show_authentication_token_user_path(@user), :class => 'btn-primary btn' %>
+    <% end %>
+    <% if current_user.admin? %>
+      <br>
+      <%= button_to 'Revoke Authentication Token', revoke_authentication_token_user_path(@user), :class => 'btn-danger btn' %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+@togglePanel = (element) ->
+  button = $(element)
+  state = button.data("state")
+  spanClass0 = button.data("span-class-0")
+  spanClass1 = button.data("span-class-1")
+  contentId0 = button.data("content-id-0")
+  contentId1 = button.data("content-id-1")
+  glyphiconSpan = button.children('span:first')
+  if (!state? || state == "0")
+    glyphiconSpan.removeClass(spanClass0)
+    glyphiconSpan.addClass(spanClass1)
+    $(element).closest('.panel').find(contentId0).hide()
+    $(element).closest('.panel').find(contentId1).show()
+    button.data("state", "1")
+  else
+    glyphiconSpan.removeClass(spanClass1)
+    glyphiconSpan.addClass(spanClass0)
+    $(element).closest('.panel').find(contentId1).hide()
+    $(element).closest('.panel').find(contentId0).show()
+    button.data("state", "0")
+

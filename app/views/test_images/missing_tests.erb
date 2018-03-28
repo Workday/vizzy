@@ -1,0 +1,4 @@
+<% if @test_images.size > 0 %>
+    <% breadcrumb :missing_tests, @build %>
+    <%= render partial: 'layouts/test_images_panel', locals: {title: "#{pluralize(@test_images.size, 'missing test')}, here are the corresponding base images:", images: @test_images, panel_class: "panel-danger", panel_id: "missing_images"} %>
+<% end %>

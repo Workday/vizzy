@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600px" height="600px" viewBox="0 0 600 600" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>green_check</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="green_check">
+            <text id="x" font-family="Roboto-Medium, Roboto" font-size="14" font-weight="400" fill="#FFFFFF">
+                <tspan x="497" y="-242">x</tspan>
+            </text>
+            <path d="M205,552 L32,266.149254 L168,266.149254 L263.027205,423.164268 L432,48 L568,48 L380.815155,463.599832 C356.582338,517.403091 303.055892,552 244.047247,552 L205,552 Z" id="Combined-Shape" fill="#8EA618"></path>
+        </g>
+    </g>
+</svg>

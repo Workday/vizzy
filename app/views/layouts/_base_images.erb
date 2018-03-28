@@ -1,0 +1,15 @@
+<!-- Render a toggleable panel with images and their tests/suites -->
+<!-- Pass in locals: {title: "my panel title", images: @mySetOfTestImages} -->
+<div class="panel panel-primary">
+  <%= button_to base_images_test_images_project_path(@project), :class => 'btn-default btn pull-right glyphicon-spacing', :method => :get do %>
+    <span class="glyphicon glyphicon-th-large"></span>
+  <% end %>
+  <div class="panel-heading accordion-toggle" role="button" data-parent="#accordion" data-toggle="collapse" href="#baseImagesPanel">
+    Base Images for <%= name %>
+  </div>
+  <div class="panel-collapse collapse in" id="baseImagesPanel">
+    <div class="panel-body">
+      <%= render_nested_tests(tests) %>
+    </div>
+  </div>
+</div>

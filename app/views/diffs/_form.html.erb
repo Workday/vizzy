@@ -1,0 +1,15 @@
+<%= form_for(@diff) do |f| %>
+  <%= render 'layouts/error_messages', object: f.object %>
+
+  <div class="field">
+    <%= f.label :old_image_id %><br>
+    <%= f.text_field :old_image_id %>
+  </div>
+  <div class="field">
+    <%= f.label :new_image_id %><br>
+    <%= f.text_field :new_image_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,94 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *=require commontator/application
+ */
+
+// Override colors
+$brand-primary:         #FF8B3D !default;
+$brand-success:         #8EA618 !default;
+$brand-info:            #ffab73 !default;
+$brand-warning:         #E86915 !default;
+$brand-danger:          #c70650 !default;
+
+// Import bootstrap-sprockets
+@import "bootstrap-sprockets";
+
+// Import paper variables
+@import "bootswatch/paper/variables";
+
+// Then bootstrap itself
+@import "bootstrap";
+
+// Bootstrap body padding for fixed navbar
+body { padding-top: 60px; }
+
+// And finally bootswatch style itself
+@import "bootswatch/paper/bootswatch";
+
+.btn {
+  font-weight: 500;
+}
+
+.build-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.vizzy-build-bottom-spacing {
+  margin-bottom: 10px;
+}
+
+.navbar-brand {
+  padding: 5px;
+}
+
+.panel-body .table td {
+  word-wrap: break-word;
+}
+
+.panel-body .table img {
+  max-width: 100%;
+}
+
+.space-left {
+  margin-left: 10px;
+}
+
+.space-right {
+  margin-right: 10px;
+}
+
+.space-top {
+  margin-top: 10px;
+}
+
+.space-bottom {
+  margin-top: 10px;
+}
+
+.glyphicon-spacing {
+  margin-top: 4px;
+  margin-right: 4px;
+}
+
+.vizzy-text-padding {
+  margin-top: 6px;
+}
+
+.link-danger {
+  color: $brand-danger
+}
+
+.link-success {
+  color: $brand-success
+}

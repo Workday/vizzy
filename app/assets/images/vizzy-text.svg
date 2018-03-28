@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120px" height="50px" viewBox="0 0 120 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>vizzy-typelogo</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="vizzy-typelogo" fill="#4A4243">
+            <path d="M16,18 L20.683,27.376 L25,18 L32,18 L24.713,32.382 C23.509,34.696 21.609,36 19,36 L9,18 L16,18 Z M42,18 L42,30 C42,33.508 38.508,36 35,36 L35,18 L42,18 Z M42,10.5 C42,12.433 40.433,14 38.5,14 C36.567,14 35,12.433 35,10.5 C35,8.567 36.567,7 38.5,7 C40.433,7 42,8.567 42,10.5 Z M55,31 L63,31 C63,33.927 60.926,36 58,36 L45,36 L54,23 L46,23 L46,18 L64,18 L55,31 Z M77,31 L86,31 C86,33.927 83.926,36 81,36 L66,36 L75,23 L67,23 L67,18 L85,18 L77,31 Z M94.375,31.4785 L87,17.9995 L94,17.9995 L99.21,27.4685 L104,17.9995 L111,17.9995 L100,38.9995 C97.908,42.9045 94.43,43.9995 90,43.9995 L94.417,36.2405 C95.217,34.7495 95.201,32.9545 94.375,31.4785 Z" id="Combined-Shape"></path>
+        </g>
+    </g>
+</svg>

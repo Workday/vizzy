@@ -1,0 +1,16 @@
+<% breadcrumb :base_images_test_images, @project %>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    Base Images for <%= @project.name %>
+  </div>
+  <div class="panel-body">
+    <% @project.calculate_base_images.each do |test_image| %>
+      <div class="col-lg-3 col-md-4 col-xs-6">
+        <div class="thumbnail">
+          <%= link_to image_tag(test_image.image.url(:small)), test_image_path(test_image) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

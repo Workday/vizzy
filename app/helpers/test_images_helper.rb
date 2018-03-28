@@ -1,0 +1,2 @@
+module TestImagesHelper
+end

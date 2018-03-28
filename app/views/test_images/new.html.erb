@@ -1,0 +1,21 @@
+<h2>New Image</h2>
+<%= form_for :test_image, :url => test_images_path, :html => {:multipart => true} do |form| %>
+    <p>
+      <%= form.collection_select :build_id, Build.all, :id, :title, prompt: true %>
+      <%= form.label :build, 'Build number' %>
+    </p>
+    <p>
+      <%= form.text_field :test_name %>
+      <%= form.label :test_name, 'Name of the test' %>
+    </p>
+    <p>
+      <%= form.text_field :ancestry %>
+      <%= form.label :ancestry, 'Ancestry of the test' %>
+    </p>
+    <p>
+      <%= form.file_field :image %>
+    </p>
+    <p>
+      <%= form.submit %>
+    </p>
+<% end %>

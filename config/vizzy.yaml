@@ -1,0 +1,39 @@
+defaults: &default
+  devise:
+    auth_strategy: 'local'
+  jira:
+    create_issues: yes
+  slack:
+    send_messages: yes
+  bamboo:
+    comment_on_build: yes
+  jenkins:
+    update_description: yes
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  jira:
+    create_issues: no
+  slack:
+    send_messages: no
+  bamboo:
+    comment_on_build: no
+  jenkins:
+    update_description: no
+
+ci_test:
+  <<: *default
+  jira:
+    create_issues: no
+  slack:
+    send_messages: no
+  bamboo:
+    comment_on_build: no
+  jenkins:
+    update_description: no
+
+production:
+  <<: *default

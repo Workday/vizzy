@@ -1,0 +1,1 @@
+json.extract! @test_image, :id, :test_id, :build_id, :approved, :test

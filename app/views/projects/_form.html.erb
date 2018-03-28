@@ -1,0 +1,60 @@
+<%= form_for(@project) do |f| %>
+  <%= render 'layouts/error_messages', object: f.object %>
+  <form>
+    <div class="form-group">
+      <label>Name</label>
+      <%= f.text_field :name, class: 'form-control', placeholder: 'Add project name', style: 'width:500px' %>
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <%= f.text_field :description, class: 'form-control', placeholder: 'Add project description', style: 'width:500px' %>
+    </div>
+    <div class="form-group">
+      <label>Github URL</label>
+      <%= f.text_field :github_root_url, class: 'form-control', placeholder: 'Add root url (e.g., https://github.com)', style: 'width:500px' %>
+    </div>
+    <div class="form-group">
+      <label>Github Repo</label>
+      <%= f.text_field :github_repo, class: 'form-control', placeholder: 'Add repo name (e.g., "mobile/ios")', style: 'width:500px' %>
+    </div>
+    <div class="form-group">
+      <label>Github Status Context</label>
+      <%= f.text_field :github_status_context, class: 'form-control', placeholder: 'Add context to use for status updates (e.g., "continuous-integration/vizzy-tests")', style: 'width:500px' %>
+    </div>
+
+    <% PluginManager.instance.for_project(@project) %>
+    <% @project.plugin_settings.each do |plugin_settings| %>
+      <% plugin_key = plugin_settings.first %>
+      <% plugin_hash = plugin_settings.second %>
+      <fieldset>
+        <legend><%= PluginManager.instance.get_plugin_name_from_unique_id(plugin_key) %></legend>
+        <label>Enabled?</label>
+        <div class="form-group">
+          <%= check_box_tag "enabled_plugins[#{plugin_key}]", true, plugin_hash[:enabled] %>
+        </div>
+        <div class="form-group">
+          <div class="form-group">
+            <% plugin_hash.except(:enabled).each do |setting_details| %>
+              <% setting = setting_details.first %>
+              <% setting_hash = setting_details.second %>
+              <% plugin_prefix = "plugin_settings[#{plugin_key}][#{setting}]" %>
+
+              <label><%= setting_hash[:display_name] %></label>
+              <%= text_field_tag "#{plugin_prefix}[value]", setting_hash[:value], class: 'form-control', placeholder: setting_hash[:placeholder], style: 'width:500px' %>
+
+              <!--Hidden Fields-->
+              <%= hidden_field_tag "#{plugin_prefix}[display_name]", setting_hash[:display_name], class: 'form-control', style: 'width:500px' %>
+              <%= hidden_field_tag "#{plugin_prefix}[placeholder]", setting_hash[:placeholder], class: 'form-control', style: 'width:500px' %>
+              <br>
+            <% end %>
+          </div>
+        </div>
+      </fieldset>
+    <% end %>
+    <div class="actions">
+      <%= link_to 'Cancel', @project, class: 'btn btn-default' %>
+      <%= f.submit 'Submit', :class => 'btn btn-success' %>
+    </div>
+    <br>
+  </form>
+<% end %>

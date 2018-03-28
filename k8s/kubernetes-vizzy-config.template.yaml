@@ -1,0 +1,82 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: vizzy
+spec:
+  rules:
+  - host: ${VIZZY_URI}
+    http:
+      paths:
+      - backend:
+          serviceName: vizzy
+          servicePort: 3000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: vizzy
+    role: service
+  name: vizzy
+spec:
+  ports:
+    - port: 3000
+      targetPort: 3000
+  selector:
+    name: vizzy
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: vizzy
+spec:
+  replicas: ${VIZZY_REPLICA_PODS}
+  template:
+    metadata:
+      labels:
+        name: vizzy
+    spec:
+      containers:
+        - name: visual
+          image: ${DOCKER_REGISTRY}/visual/vizzy:${VIZZY_VERSION}
+          resources:
+            requests:
+              memory: ${VIZZY_REQUESTS_MEMORY}
+            limits:
+              memory: ${VIZZY_LIMITS_MEMORY}
+          ports:
+            - name: web
+              containerPort: 3000
+          volumeMounts:
+            - name: visual-data
+              mountPath: /app/public/visual_images
+          env:
+            - name: VIZZY_URI
+              value: ${VIZZY_URI}
+            - name: RAILS_ENV
+              value: ${RAILS_ENV}
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: vizzy-postgres-secret
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: vizzy-postgres-secret
+                  key: password
+            - name: RAILS_MASTER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: vizzy-rails-master-key-secret
+                  key: token
+      imagePullSecrets:
+        - name: docker-dev
+      volumes:
+        - name: visual-data
+          persistentVolumeClaim:
+            claimName: visual-automation-home

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600px" height="600px" viewBox="0 0 600 600" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>red_x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="red_x" fill="#C70650">
+            <polygon id="Rectangle" transform="translate(300.000000, 300.000000) scale(-1, 1) translate(-300.000000, -300.000000) " points="32 48 168 48 568 552 432 552"></polygon>
+            <path d="M32,48 L95.5473955,48 C141.319252,48 184.586296,68.8987335 213.040731,104.751321 L568,552 L504.452604,552 C458.680748,552 415.413704,531.101267 386.959269,495.248679 L32,48 Z" id="Rectangle-Copy"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,102 @@
+<% breadcrumb :project, @project %>
+<div style="padding-right: 15px;">
+  <%= button_to 'Current Base Images', base_images_project_path(@project), :class => 'btn-primary btn pull-right' %>
+</div>
+<div class="col-md-12">
+  <h2><%= @project.name %>
+    <small>
+      <%= @project.description %>
+    </small>
+  </h2>
+</div>
+<% pull_requests = @project.pull_requests %>
+<% if pull_requests.size > 0 %>
+  <% column_div = "col-md-6" %>
+
+  <div class="col-md-6">
+    <table class="table table-hover table-bordered">
+      <colgroup>
+        <col class="col-md-10">
+        <col class="col-md-1">
+        <col class="col-md-1">
+      </colgroup>
+      <thead>
+      <tr>
+        <th>Latest Pull Requests</th>
+        <th>User</th>
+        <th style="text-align: center;">Approved</th>
+      </tr>
+      </thead>
+      <% pull_requests.last(30).sort_by {|e| -e[:id]}.each do |build| %>
+        <tr>
+          <td>
+            <%= link_to truncate(build.branch_name, length: 75), build_path(build) %>
+          </td>
+          <td>  <%= build.username %> </td>
+          <td style="text-align: center;">
+            <% if build.unapproved_diffs.length == 0 && build.failure_message.blank? %>
+              <%= image_tag 'green_check.svg', :style => 'width: 22px; height: 22px;' %>
+            <% else %>
+              <%= image_tag 'red_x.svg', :style => 'width: 22px; height: 22px;' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% else %>
+  <% column_div = "col-md-12" %>
+<% end %>
+
+<div class=<%= column_div %>>
+  <table class="table table-hover table-bordered">
+    <colgroup>
+      <col class="col-md-11">
+      <col class="col-md-1">
+    </colgroup>
+    <thead>
+    <tr>
+      <th>Latest Builds</th>
+      <th style="text-align: center;">Approved</th>
+    </tr>
+    </thead>
+    <% @project.branch_builds.last(10).sort_by {|e| -e[:id]}.each do |build| %>
+      <tr>
+        <td>
+          <%= link_to truncate(build.title, length: 75), build_path(build) %>
+        </td>
+        <td style="text-align: center;">
+          <% if build.unapproved_diffs.length == 0 && build.failure_message.blank? %>
+            <%= image_tag 'green_check.svg', :style => 'width: 22px; height: 22px;' %>
+          <% else %>
+            <%= image_tag 'red_x.svg', :style => 'width: 22px; height: 22px;' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<div class=<%= column_div %>>
+  <% if @project.uncommitted_builds.size > 0 && current_user.admin? %>
+    <table class="table table-hover table-bordered">
+      <colgroup>
+        <col class="col-md-11">
+        <col class="col-md-1">
+      </colgroup>
+      <thead>
+      <tr>
+        <th style="vertical-align: middle;">Uncommitted Builds</th>
+        <th><%= button_to 'Cleanup Old Uncommitted Builds', cleanup_uncommitted_builds_project_path(@project), :method => :post, :remote => true, :class => 'btn-primary btn pull-right' %></th>
+      </tr>
+      </thead>
+      <% @project.uncommitted_builds.last(10).sort_by {|e| -e[:id]}.each do |build| %>
+        <tr>
+          <td colspan="2">
+            <%= link_to truncate(build.title, length: 75), build_path(build) %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+</div>

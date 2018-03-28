@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4><%= t('.log_in', :default => "Log In") %></h4>
+      </div>
+      <div class="panel-body">
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {role: "form"}) do |f| %>
+          <div class="form-group">
+            <%= f.label :email %>
+            <%= f.text_field :email, autofocus: true, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :password %>
+            <% if VizzyConfig.instance.is_ldap_auth %>
+              <% password_placeholder = VizzyConfig.instance.get_config_value(['devise', 'password_placeholder']) %>
+              <%= f.password_field :password, autocomplete: "off", placeholder: password_placeholder, class: "form-control" %>
+            <% else %>
+              <%= f.password_field :password, autocomplete: "off", required: true, class: "form-control" %>
+            <% end %>
+          </div>
+          <% if devise_mapping.rememberable? %>
+            <div class="checkbox">
+              <label>
+                <%= f.check_box :remember_me %>
+                <%= f.label :remember_me %>
+              </label>
+            </div>
+          <% end %>
+          <%= f.submit t('.log_in', :default => "Log In"), class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+    <%= render "devise/shared/links" %>
+  </div>
+</div>

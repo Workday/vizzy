@@ -1,0 +1,35 @@
+<h2>Recent Tests</h2>
+
+<table class="table table-hover table-bordered">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Ancestry Key</th>
+    <th>Project ID</th>
+    <th>Jira Link</th>
+    <th>Comment</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @tests.sort_by {|test| test.created_at}.reverse_each do |test| %>
+      <tr>
+        <td><%= link_to test.id, test_path(test.id) %> </td>
+        <td><%= link_to test.name, test_path(test.id) %> </td>
+        <td><%= link_to test.ancestry_key, test_path(test.id) %> </td>
+        <td><%= link_to test.project_id, projects_path(test.project_id) %> </td>
+        <% if test.jira.blank? %>
+          <td>-</td>
+        <% else %>
+          <td><%= link_to test.jira, test.jira %> </td>
+        <% end %>
+        <% if test.comment.blank? %>
+          <td>-</td>
+        <% else %>
+          <td><%= link_to test.comment, test_path(test.id) %> </td>
+        <% end %>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

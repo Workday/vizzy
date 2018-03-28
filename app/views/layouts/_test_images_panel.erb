@@ -1,0 +1,48 @@
+<!-- Render a toggleable panel with images and their tests/suites -->
+<!-- Pass in locals: {title: "my panel title", images: @mySetOfTestImages} -->
+<div class="panel <%= panel_class %>">
+  <div class="panel-heading accordion-toggle" role="button" data-parent="#accordion" data-toggle="collapse" href="#<%= panel_id %>">
+    <%= title %>
+  </div>
+  <div class="panel-collapse collapse in" id="<%= panel_id %>">
+    <div class="panel-body">
+      <table class="table" id="table">
+        <colgroup>
+          <col class="col-md-2">
+          <col class="col-md-6">
+          <col class="col-md-4">
+        </colgroup>
+        <thead>
+        <tr>
+          <th>Image</th>
+          <th>Test</th>
+          <th>Info</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% images.each do |test_image| %>
+          <tr>
+            <% if test_image&.image && test_image.test %>
+              <td><%= link_to image_tag(test_image.image.url(:thumbnail)), test_image_path(test_image) %></td>
+              <td><%= link_to test_image.test_key, test_path(test_image.test) %> </td>
+              <td>
+            <% end %>
+            <% if test_image.test.jira? %>
+              <strong>Jira: </strong><%= link_to test_image.test.jira, test_image.test.jira %>
+            <% end %>
+            <br>
+            <% if test_image.test.pull_request_link? %>
+              <strong>Pull Request: </strong><%= link_to test_image.test.pull_request_link, test_image.test.pull_request_link %>
+            <% end %>
+            <br>
+            <% if test_image.test.comment? %>
+              <strong>Comment: </strong> <%= test_image.test.comment %>
+            <% end %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

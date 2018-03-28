@@ -1,0 +1,10 @@
+<% breadcrumb :base_images, @project %>
+<% if current_user.admin? %>
+  <%= button_to 'Delete All Base Images For Project', remove_all_base_images_project_path(@project), :class => 'btn-danger btn' %>
+  <br>
+  <%= button_to 'Clean Base Images To Last Branch Build', clean_base_image_state_project_path(@project), :class => 'btn-danger btn' %>
+  <br>
+<% end %>
+<%= render partial: 'layouts/base_images', locals: {title: 'Base Images',
+                                                    name: @project.name,
+                                                    tests: @project.tests_ancestry_tree} %>
