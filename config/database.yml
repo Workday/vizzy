@@ -1,13 +1,12 @@
 default: &default
   adapter: postgresql
   encoding: utf8
-  database: visualautomation_dev
+  database: vizzy_dev
   pool: 5
   timeout: 5000
 
 development:
   <<: *default
-  database: visualautomation_development
 
 production: &production
   adapter: postgresql

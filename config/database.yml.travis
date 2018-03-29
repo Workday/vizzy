@@ -2,7 +2,7 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
-  database: visualautomation_dev
+  database: vizzy_dev
 
 development:
   <<: *default
@@ -15,4 +15,4 @@ ci_test:
 
 production:
   <<: *default
-  database: visualautomation
+  database: vizzy
