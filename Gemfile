@@ -47,7 +47,7 @@ gem 'commontator', '~> 5.1.0'
 gem 'sdoc', '~> 1.0.0', group: :doc
 
 # Paperclip for attachments
-gem 'paperclip', '~> 4.3'
+gem 'paperclip'
 # Imagemagick for perceptual diffs
 gem 'rmagick'
 
