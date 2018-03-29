@@ -1,5 +1,7 @@
 ![vizzy-logo-3x](https://user-images.githubusercontent.com/1944329/38047018-ffe4638a-3275-11e8-8385-68c15493a908.png)
 
+[![Build Status](https://travis-ci.org/Workday/vizzy.svg?branch=master)](https://travis-ci.org/Workday/vizzy)
+
 Vizzy is a powerful Ruby on Rails web server that facilitates Visual Automation, a continuous integration testing strategy that aims to prevent visual regressions. It does this by performing pixel by pixel comparisons of screenshots captured during test runs. In doing so, it tests application data as well as application views. In order to harness the full power of Vizzy, there are two major prerequisites:
 
 1. A build pipeline that runs tests on pull requests.
