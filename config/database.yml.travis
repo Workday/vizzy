@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  database: vizzy_dev
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+ci_test:
+  <<: *default
+
+production:
+  <<: *default
+  database: vizzy
