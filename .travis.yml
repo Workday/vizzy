@@ -1,10 +1,12 @@
 language: ruby
 rvm:
-  - 2.3.1
+  - 2.3.7
 env:
-  - DOCKER_COMPOSE_VERSION=1.4.2
+  - DOCKER_COMPOSE_VERSION=1.20.1
 script:
-  - docker-compose run app rake test
+  - docker-compose --version
+  - docker-compose run -e RAILS_MASTER_KEY=$RAILS_MASTER_KEY app rake db:create db:migrate
+  - docker-compose run -e RAILS_MASTER_KEY=$RAILS_MASTER_KEY app rake test
 before_install:
   - openssl aes-256-cbc -K $encrypted_fb8ebefd631f_key -iv $encrypted_fb8ebefd631f_iv
     -in secrets.yml.enc -out config/secrets.yml.enc -d
