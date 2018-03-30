@@ -1,19 +1,14 @@
 language: ruby
 rvm:
-- 2.3.1
-addons:
-  postgresql: '9.5'
+  - 2.3.1
 env:
-  global:
-  - PGPORT=5432
-services:
-- postgresql
+  - DOCKER_COMPOSE_VERSION=1.4.2
 script:
-- RAILS_ENV=ci_test bundle exec rake db:migrate --trace
-- bundle exec rake
-before_script:
-- cp config/database.yml.travis config/database.yml
-- psql -c 'create database vizzy_dev;' -U postgres
+  - docker-compose run app rake test
 before_install:
-- openssl aes-256-cbc -K $encrypted_fb8ebefd631f_key -iv $encrypted_fb8ebefd631f_iv
-  -in secrets.yml.enc -out config/secrets.yml.enc -d
+  - openssl aes-256-cbc -K $encrypted_fb8ebefd631f_key -iv $encrypted_fb8ebefd631f_iv
+    -in secrets.yml.enc -out config/secrets.yml.enc -d
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
