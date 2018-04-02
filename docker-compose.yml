@@ -1,0 +1,21 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:9.5.3
+  app:
+    image: $DOCKER_USERNAME/vizzy:$TRAVIS_COMMIT
+    build:
+      context: .
+      args:
+        RAILS_MASTER_KEY: $RAILS_MASTER_KEY
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    environment:
+      - RAILS_MASTER_KEY=$RAILS_MASTER_KEY
+      - POSTGRES_USER=postgres
+      - RAILS_ENV=ci_test
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
