@@ -1,5 +1,5 @@
 #Dockerfile
-FROM ruby:2.3
+FROM ruby:2.3.7
 LABEL maintainer="Scott Bishop - ScottBishop70@gmail.com"
 
 # Install tools & libs
