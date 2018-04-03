@@ -16,7 +16,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 deploy:
   provider: script
-  script: bash docker_push
+  script: ./docker_push.sh
   skip_cleanup: true
   on:
     branch: master
