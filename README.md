@@ -53,7 +53,7 @@ Add secrets to the yaml file by running the following command: *Note*: you may s
 ```
 EDITOR=vi bin/rails secrets:edit
 ```
-If you see an error `Devise.secret_key was not set` you will have to add the sample secret_key to [devise.rb](/config/intitializers/devise.rb), run the setup/edit, then remove the Devise.secret_key. Devise now uses the project secret_key_base.
+If you see an error `Devise.secret_key was not set` you will have to add the sample secret_key to [devise.rb](/config/initializers/devise.rb), run the setup/edit, then remove the Devise.secret_key. Devise now uses the project secret_key_base.
 
 Here are the possible secrets:
 
@@ -124,7 +124,7 @@ From the Vizzy project directory run
 
 Vizzy projects allow you to run visual automation on multiple branches (ex. Master, Develop), each branch represented by a project. Each project has its own set of base images. There is typically a one to one mapping of a build plan to a Vizzy project. NOTE: Pull Requests opened against the master branch should be uploaded to the master Vizzy project so the correct set of base images are used to calculated the diffs.  
 
-To create a test project for development, I recommend seeding the database. Vizzy uses [FactoryBot](https://github.com/thoughtbot/factory_bot) to add test data. Add your github information (required) as well as plugin settings (optional) to the project factory [project.rb](test/factories/projects.rb).
+To create a test project for development, I recommend seeding the database. Vizzy uses [FactoryBot](https://github.com/thoughtbot/factory_bot) to add test data. Add your Github information (required) as well as plugin settings (optional) to the project factory [project.rb](test/factories/projects.rb).
 
 Then run `rake db:reset` which will clear the database, run the migrations, and populate the database with the test data in [seeds.rb](db/seeds.rb)(sample user and project). You could also achieve this by running `rake db:seed` if you don't want to clear the database.
 
@@ -255,7 +255,7 @@ VISUAL_HOST=https://vizzy.com
     ruby ./upload_images_to_server.rb fail "$VISUAL_HOST" --message "Build Failed!" --file ./visual-build-info --user-email "$VIZZY_USER_EMAIL" --user-token "$VIZZY_USER_TOKEN"
 ```
 
-### Turn off squash and merging for your Githup repository
+### Disable squash merging
 Squashing your commits when merging a pull request will break pre-approvals. This is because Vizzy uses the commit sha of the pull request and stores it with each image approval. Squash and merge will create a NEW merge commit and remove the commit sha that was used for approvals.
 
 To disable this setting, go to the Github repository settings, and uncheck `Allow squash merging`
