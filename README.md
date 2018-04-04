@@ -95,7 +95,7 @@ To generate new instances of `secret_key_base` run `rake secret` 4 times and cop
 ### Configure Authentication Type
 To configure open [vizzy.yaml](config/vizzy.yaml)
 
-For local authentication with user registration, change the devise auth strategy to local.
+For local authentication with user registration, no setup is required. The default auth strategy is local.
 ```yaml
 defaults: &default
   devise:
@@ -157,7 +157,9 @@ Here is a sample run config for Master 1:
 
 This server is docker ready and can be deployed with any tool you want.
 
-- [Dockerfile](Dockerfile): Builds dependencies, adds the source code, precompiles the assets, and exposes port 3000. 
+- [Dockerfile](Dockerfile): Builds dependencies, adds the source code, precompiles the assets, and exposes port 3000.
+
+Travis CI publishes the latest master image to [Docker Hub](https://hub.docker.com/r/scottcbishop/vizzy/)
 
 We recommend a tool called [Kubernetes](https://kubernetes.io/docs/home/) (k8s), an opened sourced container cluster manager originally designed by Google, now owned by Cloud Native Computing. This tool aims to 
 provide a platform for automating deployment, scaling, and operations of application containers across clusters of hosts.
@@ -253,6 +255,11 @@ VISUAL_HOST=https://vizzy.com
     ruby ./upload_images_to_server.rb fail "$VISUAL_HOST" --message "Build Failed!" --file ./visual-build-info --user-email "$VIZZY_USER_EMAIL" --user-token "$VIZZY_USER_TOKEN"
 ```
 
+### Turn off squash and merging for your Githup repository
+Squashing your commits when merging a pull request will break pre-approvals. This is because Vizzy uses the commit sha of the pull request and stores it with each image approval. Squash and merge will create a NEW merge commit and remove the commit sha that was used for approvals.
+
+To disable this setting, go to the Github repository settings, and uncheck `Allow squash merging`
+
 ### Non-Deterministic Challenges
 Turn off Animations for test suites: taking screenshots of animations does not always capture the same image which will cause visual diffs. 
 
@@ -266,6 +273,10 @@ Unit tests are run with the command
 In order to run System tests, fill out the system test encrypted secrets. System tests are run with the command
  
 ```rails test:system```
+
+## Slack Workspace
+Join the developer community
+https://join.slack.com/t/vizzy-dev/shared_invite/enQtMzQxMzI4MjE5MTA3LTNmM2U5MzgzN2U4NzIxZTMzNDI2ZjE5ZDNmNTBhYzUxYzFiMGIzNjE0YWNiYjRlZjhhNWM5YjAzOGViNDA5YzQ
 
 ## Contributing
 
