@@ -13,7 +13,7 @@
     <% column_div = "col-md-6" %>
 
     <div class="col-md-6 no-padding">
-      <table class="table table-hover table-bordered">
+      <table class="table table-responsive table-hover table-bordered w-100 d-block d-md-table">
         <colgroup>
           <col class="col-md-10">
           <col class="col-md-1">
@@ -48,7 +48,7 @@
   <% end %>
 
   <div class=<%= column_div %>>
-    <table class="table table-hover table-bordered">
+    <table class="table table-responsive table-hover table-bordered w-100 d-block d-md-table">
       <colgroup>
         <col class="col-md-11">
         <col class="col-md-1">
@@ -78,7 +78,7 @@
 
   <div class=<%= column_div %>>
     <% if @project.uncommitted_builds.size > 0 && current_user.admin? %>
-      <table class="table table-hover table-bordered">
+      <table class="table table-responsive table-hover table-bordered w-100 d-block d-md-table">
         <colgroup>
           <col class="col-md-11">
           <col class="col-md-1">
