@@ -1,16 +1,17 @@
 <% breadcrumb :diffs %>
-<h2>Diffs</h2>
+<div class="container">
+  <h2>Diffs</h2>
 
-<table class="table table-hover table-bordered">
-  <thead>
+  <table class="table table-hover table-bordered">
+    <thead>
     <tr>
       <th>Old Image</th>
       <th>New Image</th>
       <th>Differences</th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @diffs.last(300).each do |diff| %>
       <tr>
         <td><%= link_to diff do %>
@@ -27,5 +28,6 @@
         </td>
       </tr>
     <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>

@@ -7,37 +7,23 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
 
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
+<nav class="navbar navbar-default">
+  <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to image_tag("vizzy-logo.svg", alt: "logo"), '/', class: 'navbar-brand' %>
+      <% if user_signed_in? %>
+        <%= link_to image_tag("vizzy-text.svg", class: "img-responsive vizzy-text-padding"), projects_path %>
+      <% end %>
     </div>
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <% breadcrumbs(display_single_fragment: true).tap do |links| %>
-          <% if links.any? %>
-            <p class="navbar-text">
-              <% links.each_with_index do |link, index| %>
-                <%= link_to link.text, link.url, class: (link.current? ? 'breadcrumb-current navbar-link' : 'navbar-link') %>
-                <% if index != links.length - 1 %>
-                  /
-                <% end %>
-              <% end %>
-            </p>
-          <% end %>
-        <% end %>
-      </ul>
-
-      <% if user_signed_in? %>
+    <% if user_signed_in? %>
+      <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%= current_user.display_name %> <span class="caret"></span></a>
@@ -50,12 +36,29 @@
             </ul>
           </li>
         </ul>
-      <% else %>
-        <%= link_to image_tag("vizzy-text.svg", class: "img-responsive center-block vizzy-text-padding") %>
+      </div><!--/.nav-collapse -->
     <% end %>
-    </div>
-  </div>
+  </div><!--/.container-fluid -->
+  <% unless user_signed_in? %>
+    <%= link_to image_tag("vizzy-text.svg", class: "img-responsive center-block vizzy-text-padding") %>
+  <% end %>
 </nav>
+<!-- Breadcrumb-->
+<div class="container">
+  <% breadcrumbs(display_single_fragment: true).tap do |links| %>
+    <% if links.any? %>
+      <div class="mr-auto">
+        <ol class="breadcrumb d-inline-flex pl-0 pt-0">
+          <% links.each_with_index do |link, index| %>
+            <li> <%= link_to link.text, link.url, class: (link.current? ? 'breadcrumb-item navbar-link' : 'navbar-link') %></li>
+          <% end %>
+        </ol>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+<body>
+
 <br>
 <div class="container-fluid">
   <%= flash_messages %>

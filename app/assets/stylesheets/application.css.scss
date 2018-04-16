@@ -29,9 +29,6 @@ $brand-danger:          #c70650 !default;
 // Then bootstrap itself
 @import "bootstrap";
 
-// Bootstrap body padding for fixed navbar
-body { padding-top: 60px; }
-
 // And finally bootswatch style itself
 @import "bootswatch/paper/bootswatch";
 
@@ -42,14 +39,6 @@ body { padding-top: 60px; }
 .build-header {
   display: flex;
   justify-content: space-between;
-}
-
-.vizzy-build-bottom-spacing {
-  margin-bottom: 10px;
-}
-
-.navbar-brand {
-  padding: 5px;
 }
 
 .panel-body .table td {
@@ -91,4 +80,12 @@ body { padding-top: 60px; }
 
 .link-success {
   color: $brand-success
+}
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
 }

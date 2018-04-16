@@ -1,5 +1,6 @@
-<h2>New Image</h2>
-<%= form_for :test_image, :url => test_images_path, :html => {:multipart => true} do |form| %>
+<div class="container">
+  <h2>New Image</h2>
+  <%= form_for :test_image, :url => test_images_path, :html => {:multipart => true} do |form| %>
     <p>
       <%= form.collection_select :build_id, Build.all, :id, :title, prompt: true %>
       <%= form.label :build, 'Build number' %>
@@ -18,4 +19,5 @@
     <p>
       <%= form.submit %>
     </p>
-<% end %>
+  <% end %>
+</div>

@@ -1,40 +1,42 @@
 <% breadcrumb :builds %>
-<h2>Recent Builds</h2>
+<div class="container">
+  <h2>Recent Builds</h2>
 
-<table class="table table-hover table-bordered">
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Title</th>
-    <th>Project ID</th>
-    <th>Hash</th>
-    <th>Pull Request Number</th>
-    <th>Branch Name</th>
-    <th>Dev Build</th>
-    <th>Temporary</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <% @builds.last(300).sort_by {|build| build.created_at}.reverse_each do |build| %>
+  <table class="table table-hover table-bordered">
+    <thead>
     <tr>
-      <td><%= link_to build.id, build_path(build.id) %></td>
-      <td><%= link_to build.title, build_path(build.id) %></td>
-      <td><%= link_to build.project.id, project_path(build.project.id) %></td>
-      <td><%= link_to build.commit_sha, build_path(build.id) %></td>
-      <% if build.pull_request_number == "-1" %>
-        <td>-</td>
-      <% else %>
-        <td><%= link_to build.pull_request_number, build_path(build.id) %></td>
-      <% end %>
-      <% if build.branch_name.blank? %>
-        <td>-</td>
-      <% else %>
-        <td><%= link_to build.branch_name, build_path(build.id) %></td>
-      <% end %>
-      <td><%= build.dev_build? %></td>
-      <td><%= build.temporary? %></td>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Project ID</th>
+      <th>Hash</th>
+      <th>Pull Request Number</th>
+      <th>Branch Name</th>
+      <th>Dev Build</th>
+      <th>Temporary</th>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+    <% @builds.last(300).sort_by {|build| build.created_at}.reverse_each do |build| %>
+      <tr>
+        <td><%= link_to build.id, build_path(build.id) %></td>
+        <td><%= link_to build.title, build_path(build.id) %></td>
+        <td><%= link_to build.project.id, project_path(build.project.id) %></td>
+        <td><%= link_to build.commit_sha, build_path(build.id) %></td>
+        <% if build.pull_request_number == "-1" %>
+          <td>-</td>
+        <% else %>
+          <td><%= link_to build.pull_request_number, build_path(build.id) %></td>
+        <% end %>
+        <% if build.branch_name.blank? %>
+          <td>-</td>
+        <% else %>
+          <td><%= link_to build.branch_name, build_path(build.id) %></td>
+        <% end %>
+        <td><%= build.dev_build? %></td>
+        <td><%= build.temporary? %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

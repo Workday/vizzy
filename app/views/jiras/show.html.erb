@@ -1,4 +1,6 @@
-<h2> <%= link_to @jira.jira_key, @jira.jira_link %></h2>
+<div class="container">
+  <h2> <%= link_to @jira.jira_key, @jira.jira_link %></h2>
 
-<%= link_to 'Edit', edit_jira_path(@jira) %> |
-<%= link_to 'Back', jiras_path %>
+  <%= link_to 'Edit', edit_jira_path(@jira) %> |
+  <%= link_to 'Back', jiras_path %>
+</div>

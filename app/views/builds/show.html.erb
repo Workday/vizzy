@@ -1,104 +1,104 @@
 <% breadcrumb :build, @build %>
-<div class="build-header">
-  <% if @build.branch_name.nil? or @build.username.nil? %>
-    <%= image_tag("vizzy-text.svg", class: "img-responsive pull-left vizzy-build-bottom-spacing") %>
-  <% end %>
-  <h3>
-    <% if @build.dev_build? %>
-      <small>Dev Build - No Action Can Be Taken. New tests will not be shown.</small>
-    <% elsif @build.branch_name.nil? or @build.username.nil? %>
-    <% else %>
-      <%= @build.branch_name %>
-      <small>
-        (<%= @build.username %>)
-      </small>
-    <% end %>
-  </h3>
-  <%= button_to 'Current Base Images', base_images_project_path(@build.project), :class => 'btn-primary btn pull-right' %>
-</div>
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Build Info</h3>
+<div class="container">
+  <div class="build-header">
+    <h3>
+      <% if @build.dev_build? %>
+        <small>Dev Build - No Action Can Be Taken. New tests will not be shown.</small>
+      <% elsif @build.branch_name.nil? or @build.username.nil? %>
+      <% else %>
+        <%= @build.branch_name %>
+        <small>
+          (<%= @build.username %>)
+        </small>
+      <% end %>
+    </h3>
+    <%= button_to 'Current Base Images', base_images_project_path(@build.project), :class => 'btn-primary btn pull-right' %>
   </div>
-  <div class="panel-body">
-    <% if @build.can_approve_images && @unapproved_diffs.size > 0 %>
-      <%= button_to 'Approve All Images', approve_all_images_build_path(@build), :class => 'btn-success btn pull-right' %>
-    <% end %>
-    <% if @build.title? %>
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Build Info</h3>
+    </div>
+    <div class="panel-body">
+      <% if @build.can_approve_images && @unapproved_diffs.size > 0 %>
+        <%= button_to 'Approve All Images', approve_all_images_build_path(@build), :class => 'btn-success btn pull-right' %>
+      <% end %>
+      <% if @build.title? %>
+        <strong>
+          <%= link_to @build.title, @build.url %>
+        </strong>
+        <br>
+      <% end %>
       <strong>
-        <%= link_to @build.title, @build.url %>
+        <%= @build.formatted_created_at_time %>
       </strong>
       <br>
-    <% end %>
-    <strong>
-      <%= @build.formatted_created_at_time %>
-    </strong>
-    <br>
-    <strong>Project: </strong><%= @build.project.name %>
-    <br>
-    <% if !@build.is_branch_build && !@build.dev_build %>
-      <div>
-        <strong>Pull Request:</strong> <%= link_to("#{@build.project.github_repo_url}/pull/#{@build
-          .pull_request_number}", "#{@build.project.github_repo_url}/pull/#{@build.pull_request_number}") %>
-      </div>
-    <% end %>
-    <% if @build.commit_sha? %>
-      <div><strong>Sha: </strong><%= @build.commit_sha %></div>
-    <% end %>
-    <div><strong><%= @build.num_of_images_in_build %></strong> images checked</div>
-    <div><strong><%= @build.diffs.size %></strong> difference(s) found</div>
-    <div><strong><%= @new_tests.size %></strong> new test(s) added</div>
-    <% unless @missing_tests.blank? %>
-      <%= link_to "#{@missing_tests.size} missing test(s)", missing_tests_build_path, :class => 'alert-link link-danger' %>
-    <% end %>
-    <% unless @successful_tests.blank? %>
-      <%= link_to "#{@successful_tests.size} successful test(s)", successful_tests_build_path, :class => 'alert-link link-success' %>
-    <% end %>
+      <strong>Project: </strong><%= @build.project.name %>
+      <br>
+      <% if !@build.is_branch_build && !@build.dev_build %>
+        <div>
+          <strong>Pull Request:</strong> <%= link_to("#{@build.project.github_repo_url}/pull/#{@build
+            .pull_request_number}", "#{@build.project.github_repo_url}/pull/#{@build.pull_request_number}") %>
+        </div>
+      <% end %>
+      <% if @build.commit_sha? %>
+        <div><strong>Sha: </strong><%= @build.commit_sha %></div>
+      <% end %>
+      <div><strong><%= @build.num_of_images_in_build %></strong> images checked</div>
+      <div><strong><%= @build.diffs.size %></strong> difference(s) found</div>
+      <div><strong><%= @new_tests.size %></strong> new test(s) added</div>
+      <% unless @missing_tests.blank? %>
+        <%= link_to "#{@missing_tests.size} missing test(s)", missing_tests_build_path, :class => 'alert-link link-danger' %>
+      <% end %>
+      <% unless @successful_tests.blank? %>
+        <%= link_to "#{@successful_tests.size} successful test(s)", successful_tests_build_path, :class => 'alert-link link-success' %>
+      <% end %>
+    </div>
   </div>
-</div>
 
-<% if @build.temporary? %>
-  <div class="alert alert-info">This build has not been committed. Uploads may still be in progress.</div>
-<% elsif !@build.failure_message.blank? %>
-  <div class="alert alert-danger">Build Failed: <%= @build.failure_message %>.
-    <%= link_to 'Please look at the CI build to diagnose the issue.', @build.url, :class => 'alert-link' %>
-  </div>
-<% elsif @build.num_of_images_in_build == 0 %>
-  <div class="alert alert-danger">No images were uploaded to this build, there was an issue generating or uploading
-    the images in the build. <%= link_to 'Please look at the CI build to diagnose the issue.', @build.url, :class => 'alert-link' %>
-  </div>
-<% elsif @unapproved_diffs.size > 0 %>
-  <% if @build.dev_build? %>
-    <% link_text = 'Click here to look through them.' %>
+  <% if @build.temporary? %>
+    <div class="alert alert-info">This build has not been committed. Uploads may still be in progress.</div>
+  <% elsif !@build.failure_message.blank? %>
+    <div class="alert alert-danger">Build Failed: <%= @build.failure_message %>.
+      <%= link_to 'Please look at the CI build to diagnose the issue.', @build.url, :class => 'alert-link' %>
+    </div>
+  <% elsif @build.num_of_images_in_build == 0 %>
+    <div class="alert alert-danger">No images were uploaded to this build, there was an issue generating or uploading
+      the images in the build. <%= link_to 'Please look at the CI build to diagnose the issue.', @build.url, :class => 'alert-link' %>
+    </div>
+  <% elsif @unapproved_diffs.size > 0 %>
+    <% if @build.dev_build? %>
+      <% link_text = 'Click here to look through them.' %>
+    <% else %>
+      <% link_text = 'Please look through them to approve them.' %>
+    <% end %>
+    <div class="alert alert-danger">This build has <%= @unapproved_diffs.size %> unapproved visual
+      difference(s). <%= link_to link_text, diff_path(@unapproved_diffs.first), :class => 'alert-link' %></div>
+  <% elsif @approved_diffs.size > 0 %>
+    <div class="alert alert-success">All visual differences in this build have been approved. You can review what was
+      changed below.
+    </div>
   <% else %>
-    <% link_text = 'Please look through them to approve them.' %>
+    <div class="alert alert-success">No visual differences were found between this build and the base images.</div>
   <% end %>
-  <div class="alert alert-danger">This build has <%= @unapproved_diffs.size %> unapproved visual
-    difference(s). <%= link_to link_text, diff_path(@unapproved_diffs.first), :class => 'alert-link' %></div>
-<% elsif @approved_diffs.size > 0 %>
-  <div class="alert alert-success">All visual differences in this build have been approved. You can review what was
-    changed below.
-  </div>
-<% else %>
-  <div class="alert alert-success">No visual differences were found between this build and the base images.</div>
-<% end %>
 
-<% if @unapproved_diffs.size > 0 %>
-  <% title_text = "#{pluralize(@unapproved_diffs.size, 'diff')}" %>
-  <% if !@build.dev_build? %>
-    <% title_text += ' waiting for approval' %>
+  <% if @unapproved_diffs.size > 0 %>
+    <% title_text = "#{pluralize(@unapproved_diffs.size, 'diff')}" %>
+    <% if !@build.dev_build? %>
+      <% title_text += ' waiting for approval' %>
+    <% end %>
+    <%= render partial: 'layouts/diffs_panel', locals: {title: title_text, diffs: @unapproved_diffs, show_approver: false, panel_class: "panel-warning", panel_id: "diffs_images"} %>
   <% end %>
-  <%= render partial: 'layouts/diffs_panel', locals: {title: title_text, diffs: @unapproved_diffs, show_approver: false, panel_class: "panel-warning", panel_id: "diffs_images"} %>
-<% end %>
 
-<% if @new_tests.size > 0 %>
-  <%= render partial: 'layouts/test_images_panel', locals: {title: "#{pluralize(@new_tests.size, 'new test')} added", images: @new_tests, panel_class: "panel-success", panel_id: "new_images"} %>
-<% end %>
+  <% if @new_tests.size > 0 %>
+    <%= render partial: 'layouts/test_images_panel', locals: {title: "#{pluralize(@new_tests.size, 'new test')} added", images: @new_tests, panel_class: "panel-success", panel_id: "new_images"} %>
+  <% end %>
 
-<% if @approved_diffs.size > 0 %>
-  <%= render partial: 'layouts/diffs_panel', locals: {title: "#{pluralize(@approved_diffs.size, 'diff')} approved", diffs: @approved_diffs, show_approver: true, panel_class: "panel-success", panel_id: "approved_images"} %>
-<% end %>
+  <% if @approved_diffs.size > 0 %>
+    <%= render partial: 'layouts/diffs_panel', locals: {title: "#{pluralize(@approved_diffs.size, 'diff')} approved", diffs: @approved_diffs, show_approver: true, panel_class: "panel-success", panel_id: "approved_images"} %>
+  <% end %>
 
-<%= commontator_thread(@build) %>
-<br>
-<br>
+  <%= commontator_thread(@build) %>
+  <br>
+  <br>
+</div>

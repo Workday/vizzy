@@ -1,20 +1,21 @@
 <% breadcrumb :test_images %>
-<h2>Recent Test Images</h2>
+<div class="container">
+  <h2>Recent Test Images</h2>
 
-<table class="table table-hover table-bordered">
-  <tr>
-    <th>ID</th>
-    <th>Image</th>
-    <th>Test Key</th>
-    <th>Build Title</th>
-    <th>Approved?</th>
-    <th>MD5</th>
-    <th>Branch</th>
-    <th>Build ID</th>
-    <th>Test ID</th>
-  </tr>
+  <table class="table table-hover table-bordered">
+    <tr>
+      <th>ID</th>
+      <th>Image</th>
+      <th>Test Key</th>
+      <th>Build Title</th>
+      <th>Approved?</th>
+      <th>MD5</th>
+      <th>Branch</th>
+      <th>Build ID</th>
+      <th>Test ID</th>
+    </tr>
 
-  <% @test_images.sort_by {|test_image| test_image.created_at}.reverse_each do |image| %>
+    <% @test_images.sort_by {|test_image| test_image.created_at}.reverse_each do |image| %>
       <tr>
         <td><%= link_to image.id, test_image_path(image.id) %></td>
         <td><%= image_tag image.image.url(:thumbnail) %></td>
@@ -30,5 +31,6 @@
         <td><%= link_to image.build.id, build_path(image.build.id) %></td>
         <td><%= link_to image.test_id, test_path(image.test_id) %></td>
       </tr>
-  <% end %>
-</table>
+    <% end %>
+  </table>
+</div>

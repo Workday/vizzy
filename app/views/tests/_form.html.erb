@@ -1,7 +1,8 @@
-<%= form_for(@test) do |f| %>
-  <%= render 'layouts/error_messages', object: f.object %>
+<div class="container">
+  <%= form_for(@test) do |f| %>
+    <%= render 'layouts/error_messages', object: f.object %>
 
-  <br>
+    <br>
     <form>
       <div class="form-group">
         <label>Test Name</label>
@@ -21,11 +22,12 @@
       </div>
       <div class="form-group">
         <label>Comment</label>
-        <%= f.text_area :comment, class: 'form-control', rows:'3', placeholder: 'Add a comment...', style: 'width:500px' %>
+        <%= f.text_area :comment, class: 'form-control', rows: '3', placeholder: 'Add a comment...', style: 'width:500px' %>
       </div>
       <div class="actions">
         <%= link_to 'Cancel', @test, class: 'btn btn-default' %>
         <%= f.submit 'Save', :class => 'btn btn-success' %>
       </div>
     </form>
-<% end %>
+  <% end %>
+</div>
