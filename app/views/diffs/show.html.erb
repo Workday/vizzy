@@ -1,109 +1,112 @@
 <% breadcrumb :diff, @diff %>
-<% count = 0 %>
-<% @diff.build.diffs.each {|diff| %>
-  <% if diff.old_image.test_key == @diff.old_image.test_key %>
-    <% count += 1 %>
-  <% end %>
-<% } %>
+<div class="container">
+  <% count = 0 %>
+  <% @diff.build.diffs.each {|diff| %>
+    <% if diff.old_image.test_key == @diff.old_image.test_key %>
+      <% count += 1 %>
+    <% end %>
+  <% } %>
 
-<% jira_plugin_hash = PluginManager.instance.is_plugin_enabled(@diff.build.project, JiraPlugin.name) %>
+  <% jira_plugin_hash = PluginManager.instance.is_plugin_enabled(@diff.build.project, JiraPlugin.name) %>
 
-<% @diff.build.diffs.each {|diff| %>
-  <% if diff.old_image.test_key == @diff.old_image.test_key %>
-    <div class="row vertical-center">
-      <div class="col-lg-3 col-md-4 col-sm-4">
-        <p class="text-center">Differences</p><%= image_tag diff.differences.url, :class => 'img-responsive' %>
-      </div>
-      <div class="col-lg-3 col-md-4 col-sm-4">
-        <p class="text-center">Old Image</p><%= image_tag diff.old_image.image.url, :class => 'img-responsive' %>
-      </div>
-      <div class="col-lg-3 col-md-4 col-sm-4">
-        <p class="text-center">New Image</p><%= image_tag diff.new_image.image.url, :class => 'img-responsive' %>
-      </div>
-      <div class="col-lg-3 col-md-4 col-sm-4">
-        <p class="text-center">Info</p>
-        <%= form_for(diff.old_image.test) do |f| %>
-          <% if diff.old_image.test.errors.any? %>
-            <div id="error_explanation">
-              <h2><%= pluralize(diff.old_image.test.errors.count, "error") %> prohibited this test from being
-                saved:</h2>
+  <% @diff.build.diffs.each {|diff| %>
+    <% if diff.old_image.test_key == @diff.old_image.test_key %>
+      <div class="row vertical-center">
+        <div class="col-lg-3 col-md-4 col-sm-4">
+          <p class="text-center">Differences</p><%= image_tag diff.differences.url, :class => 'img-responsive' %>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-4">
+          <p class="text-center">Old Image</p><%= image_tag diff.old_image.image.url, :class => 'img-responsive' %>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-4">
+          <p class="text-center">New Image</p><%= image_tag diff.new_image.image.url, :class => 'img-responsive' %>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-4">
+          <p class="text-center">Info</p>
+          <%= form_for(diff.old_image.test) do |f| %>
+            <% if diff.old_image.test.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(diff.old_image.test.errors.count, "error") %> prohibited this test from being
+                  saved:</h2>
 
-              <ul>
-                <% diff.old_image.test.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
-          <br>
-          <form>
-            <% unless jira_plugin_hash.nil? %>
-              <div class="form-group">
-                <label>Jira</label>
-                <%= f.url_field :jira, class: 'form-control', placeholder: 'Add a Jira link' %>
+                <ul>
+                  <% diff.old_image.test.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
               </div>
             <% end %>
-            <div class="form-group">
-              <label>Pull Request</label>
-              <%= f.url_field :pull_request_link, class: 'form-control', placeholder: 'Add a pull request link' %>
-            </div>
-            <div class="form-group">
-              <label>Comment</label>
-              <%= f.text_area :comment, class: 'form-control', rows: '3', placeholder: 'Add a comment...' %>
-              <% unless diff.old_image.test.comment.blank? %>
-                <label>Added By: <%= diff.old_image.test.comment_user %></label>
+            <br>
+            <form>
+              <% unless jira_plugin_hash.nil? %>
+                <div class="form-group">
+                  <label>Jira</label>
+                  <%= f.url_field :jira, class: 'form-control', placeholder: 'Add a Jira link' %>
+                </div>
               <% end %>
-            </div>
-            <div class="actions">
-              <%= f.submit 'Save', :class => 'btn btn-success' %>
-            </div>
-          </form>
-        <% end %>
-        <% if count > 1 %>
-          <% unless diff.build.temporary? %>
+              <div class="form-group">
+                <label>Pull Request</label>
+                <%= f.url_field :pull_request_link, class: 'form-control', placeholder: 'Add a pull request link' %>
+              </div>
+              <div class="form-group">
+                <label>Comment</label>
+                <%= f.text_area :comment, class: 'form-control', rows: '3', placeholder: 'Add a comment...' %>
+                <% unless diff.old_image.test.comment.blank? %>
+                  <label>Added By: <%= diff.old_image.test.comment_user %></label>
+                <% end %>
+              </div>
+              <div class="actions">
+                <%= f.submit 'Save', :class => 'btn btn-success' %>
+              </div>
+            </form>
+          <% end %>
+          <% if count > 1 %>
+            <% unless diff.build.temporary? %>
+              <p>
+                <%= button_to 'Approve This Old Image', multiple_diff_approval_diff_path(diff), :class => 'btn-success btn vertical-center' %>
+              </p>
+            <% end %>
+
             <p>
-              <%= button_to 'Approve This Old Image', multiple_diff_approval_diff_path(diff), :class => 'btn-success btn vertical-center' %>
+              <strong>
+                <u>Old Image Pre-Approved By:</u>
+              </strong>
+            </p>
+            <% diff.old_image.build.approved_diffs.each {|approved_diff| %>
+              <% if approved_diff.new_image.test_key == diff.old_image.test_key %>
+                <%= "User: #{approved_diff.approved_by_username}" %>
+              <% end %>
+            <% } %>
+            <p>
+              Pull
+              Request: <%= link_to("#{diff.build.project.github_repo_url}/pull/#{diff.old_image.image_pull_request_number}", "#{diff.build.project.github_repo_url}/pull/#{diff.old_image.image_pull_request_number}") %>
             </p>
           <% end %>
-
-          <p>
-            <strong>
-              <u>Old Image Pre-Approved By:</u>
-            </strong>
-          </p>
-          <% diff.old_image.build.approved_diffs.each {|approved_diff| %>
-            <% if approved_diff.new_image.test_key == diff.old_image.test_key %>
-              <%= "User: #{approved_diff.approved_by_username}" %>
-            <% end %>
-          <% } %>
-          <p>
-            Pull
-            Request: <%= link_to("#{diff.build.project.github_repo_url}/pull/#{diff.old_image.image_pull_request_number}", "#{diff.build.project.github_repo_url}/pull/#{diff.old_image.image_pull_request_number}") %>
-          </p>
-        <% end %>
+        </div>
       </div>
-    </div>
 
-    <hr>
-  <% end %>
-<% } %>
-
-<div class="navbar navbar-default navbar-fixed-bottom">
-  <div class="container">
-
-    <%= button_to 'Base Images for Test', test_path(@diff.new_image.test), :class => 'navbar-btn btn-default btn pull-left', :method => :get %>
-    <%= button_to 'Test History', test_path(@diff.new_image.test), :class => 'navbar-btn btn-default btn pull-left space-left', :method => :get %>
-
-    <% unless jira_plugin_hash.nil? %>
-      <%= button_to 'Create Jira', create_jira_diff_path(@diff), params: {plugin_hash: jira_plugin_hash}, :class => 'navbar-btn btn-default btn pull-right space-left' %>
+      <hr>
     <% end %>
+  <% } %>
+  <br>
 
-    <%= button_to 'Next', next_diff_path(@diff), :class => 'navbar-btn btn-warning btn pull-right space-left' %>
-    <% if @diff.build.can_approve_images %>
-      <%= button_to 'Approve New Image', approve_diff_path(@diff), :class => 'navbar-btn btn-success btn pull-right' %>
-      <% if @diff.approved %>
-        <%= button_to 'Unapprove Image', unapprove_diff_path(@diff), :class => 'navbar-btn btn-danger btn pull-left space-left' %>
+  <div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+
+      <%= button_to 'Base Images for Test', test_path(@diff.new_image.test), :class => 'navbar-btn btn-default btn pull-left', :method => :get %>
+      <%= button_to 'Test History', test_path(@diff.new_image.test), :class => 'navbar-btn btn-default btn pull-left space-left', :method => :get %>
+
+      <% unless jira_plugin_hash.nil? %>
+        <%= button_to 'Create Jira', create_jira_diff_path(@diff), params: {plugin_hash: jira_plugin_hash}, :class => 'navbar-btn btn-default btn pull-right space-left' %>
       <% end %>
-    <% end %>
+
+      <%= button_to 'Next', next_diff_path(@diff), :class => 'navbar-btn btn-warning btn pull-right space-left' %>
+      <% if @diff.build.can_approve_images %>
+        <%= button_to 'Approve New Image', approve_diff_path(@diff), :class => 'navbar-btn btn-success btn pull-right' %>
+        <% if @diff.approved %>
+          <%= button_to 'Unapprove Image', unapprove_diff_path(@diff), :class => 'navbar-btn btn-danger btn pull-left space-left' %>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 </div>

@@ -1,7 +1,8 @@
-<%= form_for(@build) do |f| %>
-  <%= render 'layouts/error_messages', object: f.object %>
+<div class="container">
+  <%= form_for(@build) do |f| %>
+    <%= render 'layouts/error_messages', object: f.object %>
 
-  <div class="field">
+    <div class="field">
       <%= f.collection_select :project_id, Project.all, :id, :name, prompt: true %>
       <%= f.label :project_id, 'Project' %>
     </div>
@@ -20,4 +21,5 @@
     <div class="actions">
       <%= f.submit %>
     </div>
-<% end %>
+  <% end %>
+</div>

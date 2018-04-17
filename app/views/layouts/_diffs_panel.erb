@@ -6,13 +6,13 @@
   </div>
   <div class="panel-collapse collapse in" id="<%= panel_id %>">
     <div class="panel-body">
-      <table class="table" id="table">
+      <table class="table table-responsive w-100 d-block d-md-table">
         <colgroup>
           <col class="col-md-2">
           <col class="col-md-2">
           <col class="col-md-2">
-          <col class="col-md-4">
-          <col class="col-md-2">
+          <col class="col-md-4 text-truncate">
+          <col class="col-md-2 text-truncate">
         </colgroup>
         <thead>
         <tr>
@@ -31,7 +31,7 @@
               <td><%= link_to image_tag(diff.old_image.image.url(:thumbnail)), diff_path(diff) %></td>
               <td><%= link_to image_tag(diff.new_image.image.url(:thumbnail)), diff_path(diff) %></td>
               <% if diff.old_image.test && diff.new_image.test %>
-                <td><%= link_to diff.new_image.test.ancestry_key, test_path(diff.new_image.test) %> </td>
+                <td><%= link_to breaking_word_wrap(diff.new_image.test.ancestry_key), test_path(diff.new_image.test) %> </td>
                 <td>
                   <% if show_approver %>
                     <strong>Approved By: </strong><%= link_to diff.approved_by_username, user_path(User.find_by_username(diff.approved_by_username)) %><br>

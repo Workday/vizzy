@@ -1,50 +1,51 @@
 <% breadcrumb :projects %>
-<h2>Projects</h2>
-
-<table class="table table-hover table-bordered">
-  <% if current_user.admin? %>
-    <colgroup>
-      <col class="col-md-0">
-      <col class="col-md-2">
-      <col class="col-md-2">
-      <col class="col-md-2">
-      <col class="col-md-2">
-      <col class="col-md-2">
-    </colgroup>
-  <% else %>
-    <col class="col-md-0">
-    <col class="col-md-4">
-    <col class="col-md-4">
-    <col class="col-md-4">
-  <% end %>
-  <thead>
-  <tr>
-    <th style="text-align: center;">ID</th>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Images</th>
+<div class="container">
+  <h2>Projects</h2>
+  <table class="table table-responsive table-hover table-bordered w-100 d-block d-md-table">
     <% if current_user.admin? %>
-      <th>Edit</th>
-      <th>Destroy</th>
-      <th>Cleanup</th>
+      <colgroup>
+        <col class="col-md-0">
+        <col class="col-md-2">
+        <col class="col-md-2">
+        <col class="col-md-2">
+        <col class="col-md-2">
+        <col class="col-md-2">
+      </colgroup>
+    <% else %>
+      <col class="col-md-0">
+      <col class="col-md-4">
+      <col class="col-md-4">
+      <col class="col-md-4">
     <% end %>
-  </tr>
-  </thead>
-  <tbody>
-  <% @projects.sort_by {|project| project[:id]}.each do |project| %>
+    <thead>
     <tr>
-      <td style="text-align: center;"><%= link_to project.id, project %></td>
-      <td><%= link_to project.name, project %></td>
-      <td><%= link_to project.description, project %></td>
-      <td><%= link_to 'Base Images', base_images_project_path(project) %></td>
+      <th style="text-align: center;">ID</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Images</th>
       <% if current_user.admin? %>
-        <td><%= link_to 'Edit Project', edit_project_path(project) %></td>
-        <td><%= link_to 'Destroy Project', project, method: :delete, data: {confirm: 'Are you sure?'} %></td>
-        <td><%= link_to 'Cleanup Uncommitted Builds', cleanup_uncommitted_builds_project_path(project), method: :post %></td>
+        <th>Edit</th>
+        <th>Destroy</th>
+        <th>Cleanup</th>
       <% end %>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+    <% @projects.sort_by {|project| project[:id]}.each do |project| %>
+      <tr>
+        <td style="text-align: center;"><%= link_to project.id, project %></td>
+        <td><%= link_to project.name, project %></td>
+        <td><%= link_to project.description, project %></td>
+        <td><%= link_to 'Base Images', base_images_project_path(project) %></td>
+        <% if current_user.admin? %>
+          <td><%= link_to 'Edit Project', edit_project_path(project) %></td>
+          <td><%= link_to 'Destroy Project', project, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+          <td><%= link_to 'Cleanup Uncommitted Builds', cleanup_uncommitted_builds_project_path(project), method: :post %></td>
+        <% end %>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
 
-<%= link_to 'New Project', new_project_path, class: 'btn btn-primary' %>
+  <%= link_to 'New Project', new_project_path, class: 'btn btn-primary' %>
+</div>

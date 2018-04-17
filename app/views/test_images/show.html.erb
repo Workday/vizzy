@@ -1,58 +1,60 @@
 <% breadcrumb :test_image, @test_image %>
-<div style="padding-right: 15px">
-  <%= button_to 'Current Base Images', base_images_project_path(@test_image.build.project), :class => 'btn-primary btn pull-right' %>
-</div>
-<br>
-<br>
-<div class="panel panel-default">
-  <div class="panel-heading accordion-toggle" role="button" data-parent="#accordion" data-toggle="collapse" href="#testImagePanel">
-    <h3 class="panel-title">Test Image Details</h3>
+<div class="container">
+  <div style="padding-right: 15px">
+    <%= button_to 'Current Base Images', base_images_project_path(@test_image.build.project), :class => 'btn-primary btn pull-right' %>
   </div>
-  <div class="panel-collapse collapse in" id="testImagePanel">
-    <div class="panel-body">
-      <strong>Test Key: </strong><%= link_to @test_image.test_key, test_path(@test_image.test) %>
-      <br>
-      <% unless @test_image.build.title.blank? %>
-        <strong>Build: </strong><%= link_to @test_image.build.title, build_path(@test_image.build.id) %>
+  <br>
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-heading accordion-toggle" role="button" data-parent="#accordion" data-toggle="collapse" href="#testImagePanel">
+      <h3 class="panel-title">Test Image Details</h3>
+    </div>
+    <div class="panel-collapse collapse in" id="testImagePanel">
+      <div class="panel-body">
+        <strong>Test Key: </strong><%= link_to @test_image.test_key, test_path(@test_image.test) %>
         <br>
-      <% end %>
-      <strong>MD5: </strong>
-      <%= @test_image.md5 %>
-      <br>
-      <% unless @test_image.branch.blank? %>
-        <strong>Branch: </strong>
-        <%= link_to @test_image.branch, test_image_path(@test_image) %>
+        <% unless @test_image.build.title.blank? %>
+          <strong>Build: </strong><%= link_to @test_image.build.title, build_path(@test_image.build.id) %>
+          <br>
+        <% end %>
+        <strong>MD5: </strong>
+        <%= @test_image.md5 %>
         <br>
-      <% end %>
-      <strong>Build ID: </strong>
-      <%= link_to @test_image.build.id, build_path(@test_image.build.id) %>
-      <br>
-      <strong>Test ID: </strong>
-      <%= link_to @test_image.test_id, test_path(@test_image.test_id) %>
-      <br>
-      <strong>Approved? </strong>
-      <%= @test_image.approved ? 'Yes' : 'No' %>
-      <% @test_image.build.approved_diffs.each do |approved_diff| %>
-        <% if approved_diff.new_image.test_key == @test_image.test_key %>
-          <% unless approved_diff.approved_by_username.blank? %>
-            <p>
-              <strong>
-                Approved By:
-              </strong>
-              <%= link_to "#{approved_diff.approved_by_username}", user_path(User.find_by_username(approved_diff.approved_by_username)) %>
-            </p>
-          <% end %>
-          <% unless @test_image.build.is_branch_build %>
-            <p>
-              Pull
-              Request: <%= link_to("#{@test_image.build.project.github_repo_url}/pull/#{@test_image.image_pull_request_number}", "#{@test_image.build.project.github_repo_url}/pull/#{@test_image.image_pull_request_number}") %>
-              <br>
-            </p>
+        <% unless @test_image.branch.blank? %>
+          <strong>Branch: </strong>
+          <%= link_to @test_image.branch, test_image_path(@test_image) %>
+          <br>
+        <% end %>
+        <strong>Build ID: </strong>
+        <%= link_to @test_image.build.id, build_path(@test_image.build.id) %>
+        <br>
+        <strong>Test ID: </strong>
+        <%= link_to @test_image.test_id, test_path(@test_image.test_id) %>
+        <br>
+        <strong>Approved? </strong>
+        <%= @test_image.approved ? 'Yes' : 'No' %>
+        <% @test_image.build.approved_diffs.each do |approved_diff| %>
+          <% if approved_diff.new_image.test_key == @test_image.test_key %>
+            <% unless approved_diff.approved_by_username.blank? %>
+              <p>
+                <strong>
+                  Approved By:
+                </strong>
+                <%= link_to "#{approved_diff.approved_by_username}", user_path(User.find_by_username(approved_diff.approved_by_username)) %>
+              </p>
+            <% end %>
+            <% unless @test_image.build.is_branch_build %>
+              <p>
+                Pull
+                Request: <%= link_to("#{@test_image.build.project.github_repo_url}/pull/#{@test_image.image_pull_request_number}", "#{@test_image.build.project.github_repo_url}/pull/#{@test_image.image_pull_request_number}") %>
+                <br>
+              </p>
+            <% end %>
           <% end %>
         <% end %>
-      <% end %>
+      </div>
     </div>
   </div>
-</div>
 
-<%= image_tag @test_image.image.url(:small) %>
+  <%= image_tag @test_image.image.url(:small) %>
+</div>

@@ -29,27 +29,15 @@ $brand-danger:          #c70650 !default;
 // Then bootstrap itself
 @import "bootstrap";
 
-// Bootstrap body padding for fixed navbar
-body { padding-top: 60px; }
-
 // And finally bootswatch style itself
 @import "bootswatch/paper/bootswatch";
 
+html {
+  width: 100vw;
+}
+
 .btn {
   font-weight: 500;
-}
-
-.build-header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.vizzy-build-bottom-spacing {
-  margin-bottom: 10px;
-}
-
-.navbar-brand {
-  padding: 5px;
 }
 
 .panel-body .table td {
@@ -68,12 +56,13 @@ body { padding-top: 60px; }
   margin-right: 10px;
 }
 
-.space-top {
-  margin-top: 10px;
+.right-table-padding {
+  padding-right: 0;
 }
 
-.space-bottom {
-  margin-top: 10px;
+.left-table-padding {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .glyphicon-spacing {
@@ -91,4 +80,8 @@ body { padding-top: 60px; }
 
 .link-success {
   color: $brand-success
+}
+
+.table-responsive {
+  display: table;
 }

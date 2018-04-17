@@ -1,26 +1,35 @@
 <% breadcrumb :jiras %>
-<h2>Jiras</h2>
+<div class="container">
+  <h2>Jiras</h2>
 
-<table class="table table-hover table-bordered">
-  <thead>
+  <table class="table table-responsive table-hover table-bordered w-100 d-block d-md-table">
+    <colgroup>
+      <col class="col-md-0">
+      <col class="col-md-6">
+      <col class="col-md-2">
+      <col class="col-md-2">
+      <col class="col-md-2">
+    </colgroup>
+    <thead>
     <tr>
-      <th>ID</th>
+      <th style="text-align: center;">ID</th>
       <th>Title</th>
       <th>Component</th>
       <th>Issue Type</th>
       <th>Priority</th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @jiras.each do |jira| %>
       <tr>
-        <td><%= link_to jira.id, jira.jira_link  %></td>
+        <td style="text-align: center;"><%= link_to jira.id, jira.jira_link %></td>
         <td><%= link_to jira.title, jira.jira_link %></td>
         <td><%= link_to jira.component, jira.jira_link %></td>
         <td><%= link_to jira.issue_type, jira.jira_link %></td>
         <td><%= link_to jira.priority, jira.jira_link %></td>
       </tr>
     <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
