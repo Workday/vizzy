@@ -32,13 +32,12 @@ $brand-danger:          #c70650 !default;
 // And finally bootswatch style itself
 @import "bootswatch/paper/bootswatch";
 
-.btn {
-  font-weight: 500;
+html {
+  width: 100vw;
 }
 
-.build-header {
-  display: flex;
-  justify-content: space-between;
+.btn {
+  font-weight: 500;
 }
 
 .panel-body .table td {
@@ -55,6 +54,15 @@ $brand-danger:          #c70650 !default;
 
 .space-right {
   margin-right: 10px;
+}
+
+.right-table-padding {
+  padding-right: 0;
+}
+
+.left-table-padding {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .glyphicon-spacing {

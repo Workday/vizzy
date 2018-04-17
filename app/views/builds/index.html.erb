@@ -3,9 +3,19 @@
   <h2>Recent Builds</h2>
 
   <table class="table table-responsive table-hover table-bordered w-100 d-block d-md-table">
+    <colgroup>
+      <col class="col-md-0">
+      <col class="col-md-3">
+      <col class="col-md-2">
+      <col class="col-md-1">
+      <col class="col-md-3">
+      <col class="col-md-1">
+      <col class="col-md-1">
+      <col class="col-md-1">
+    </colgroup>
     <thead>
     <tr>
-      <th>ID</th>
+      <th style="text-align: center;">ID</th>
       <th>Title</th>
       <th>Project ID</th>
       <th>Hash</th>
@@ -19,7 +29,7 @@
     <tbody>
     <% @builds.last(300).sort_by {|build| build.created_at}.reverse_each do |build| %>
       <tr>
-        <td><%= link_to build.id, build_path(build.id) %></td>
+        <td style="text-align: center;"><%= link_to build.id, build_path(build.id) %></td>
         <td><%= link_to build.title, build_path(build.id) %></td>
         <td><%= link_to build.project.id, project_path(build.project.id) %></td>
         <td><%= link_to build.commit_sha, build_path(build.id) %></td>

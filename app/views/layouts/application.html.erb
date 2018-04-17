@@ -1,6 +1,10 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
   <title>Vizzy</title>
   <%= render 'application/favicon' %>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
@@ -18,7 +22,10 @@
         <span class="icon-bar"></span>
       </button>
       <% if user_signed_in? %>
-        <%= link_to image_tag("vizzy-text.svg", class: "img-responsive vizzy-text-padding"), projects_path %>
+        <div style="display:inline-block;">
+          <%= link_to image_tag("vizzy-logo.svg", class: "img-responsive vizzy-text-padding", style: "float: left;"), projects_path %>
+          <%= link_to image_tag("vizzy-text.svg", class: "img-responsive vizzy-text-padding", style: "float: right;"), projects_path %>
+        </div>
       <% end %>
     </div>
 

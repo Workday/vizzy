@@ -2,19 +2,17 @@
 <div class="container">
   <%= button_to 'Current Base Images', base_images_project_path(@build.project), :class => 'btn-primary btn pull-right' %>
   <br>
-  <div class="build-header">
-    <h3>
-      <% if @build.dev_build? %>
-        <small>Dev Build - No Action Can Be Taken. New tests will not be shown.</small>
-      <% elsif @build.branch_name.nil? or @build.username.nil? %>
-      <% else %>
-        <%= @build.branch_name %>
-        <small>
-          (<%= @build.username %>)
-        </small>
-      <% end %>
-    </h3>
-  </div>
+  <h3>
+    <% if @build.dev_build? %>
+      <small>Dev Build - No Action Can Be Taken. New tests will not be shown.</small>
+    <% elsif @build.branch_name.nil? or @build.username.nil? %>
+    <% else %>
+      <%= @build.branch_name %>
+      <small>
+        (<%= @build.username %>)
+      </small>
+    <% end %>
+  </h3>
   <br>
   <div class="panel panel-default">
     <div class="panel-heading">

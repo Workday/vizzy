@@ -3,6 +3,11 @@
   <h2>Diffs</h2>
 
   <table class="table table-responsive table-hover table-bordered w-100 d-block d-md-table">
+    <colgroup>
+      <col class="col-md-4">
+      <col class="col-md-4">
+      <col class="col-md-4">
+    </colgroup>
     <thead>
     <tr>
       <th>Old Image</th>
@@ -13,7 +18,7 @@
 
     <tbody>
     <% @diffs.last(300).each do |diff| %>
-      <tr>
+      <tr style="text-align: center;">
         <td><%= link_to diff do %>
             <%= image_tag diff.old_image.image.url(:small) %>
           <% end %>

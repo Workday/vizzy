@@ -2,9 +2,17 @@
   <h2>Recent Tests</h2>
 
   <table class="table table-responsive table-hover table-bordered w-100 d-block d-md-table">
+    <colgroup>
+      <col class="col-md-0">
+      <col class="col-md-3">
+      <col class="col-md-3">
+      <col class="col-md-2">
+      <col class="col-md-2">
+      <col class="col-md-2">
+    </colgroup>
     <thead>
     <tr>
-      <th>ID</th>
+      <th style="text-align: center;">ID</th>
       <th>Name</th>
       <th>Ancestry Key</th>
       <th>Project ID</th>
@@ -16,7 +24,7 @@
     <tbody>
     <% @tests.sort_by {|test| test.created_at}.reverse_each do |test| %>
       <tr>
-        <td><%= link_to test.id, test_path(test.id) %> </td>
+        <td style="text-align: center;"><%= link_to test.id, test_path(test.id) %> </td>
         <td><%= link_to test.name, test_path(test.id) %> </td>
         <td><%= link_to test.ancestry_key, test_path(test.id) %> </td>
         <td><%= link_to test.project_id, projects_path(test.project_id) %> </td>

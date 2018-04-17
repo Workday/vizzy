@@ -21,7 +21,7 @@ crumb :diffs do
 end
 
 crumb :diff do |diff|
-  link "Diff: #{diff.new_image.test_key}", diff_path(diff)
+  link "#{diff.new_image.test_key}", diff_path(diff)
   parent diff.build
 end
 
