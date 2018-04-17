@@ -11,44 +11,49 @@
   <% pull_requests = @project.pull_requests %>
   <% if pull_requests.size > 0 %>
     <% column_div = "col-md-6" %>
-
     <div class="col-md-6">
-      <table class="table table-responsive table-hover table-bordered w-100 d-block d-md-table space-right">
-        <colgroup>
-          <col class="col-md-10">
-          <col class="col-md-1">
-          <col class="col-md-1">
-        </colgroup>
-        <thead>
-        <tr>
-          <th>Latest Pull Requests</th>
-          <th>User</th>
-          <th style="text-align: center;">Approved</th>
-        </tr>
-        </thead>
-        <% pull_requests.last(30).sort_by {|e| -e[:id]}.each do |build| %>
-          <tr>
-            <td>
-              <%= link_to truncate(build.branch_name, length: 75), build_path(build) %>
-            </td>
-            <td>  <%= build.username %> </td>
-            <td style="text-align: center;">
-              <% if build.unapproved_diffs.length == 0 && build.failure_message.blank? %>
-                <%= image_tag 'green_check.svg', :style => 'width: 22px; height: 22px;' %>
-              <% else %>
-                <%= image_tag 'red_x.svg', :style => 'width: 22px; height: 22px;' %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </table>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <table class="table table-responsive w-100 d-block d-md-table">
+            <colgroup>
+              <col class="col-md-10">
+              <col class="col-md-1">
+              <col class="col-md-1">
+            </colgroup>
+            <thead>
+            <tr>
+              <th>Latest Pull Requests</th>
+              <th>User</th>
+              <th style="text-align: center;">Approved</th>
+            </tr>
+            </thead>
+            <% pull_requests.last(30).sort_by {|e| -e[:id]}.each do |build| %>
+              <tr>
+                <td>
+                  <%= link_to truncate(build.branch_name, length: 75), build_path(build) %>
+                </td>
+                <td>  <%= build.username %> </td>
+                <td style="text-align: center;">
+                  <% if build.unapproved_diffs.length == 0 && build.failure_message.blank? %>
+                    <%= image_tag 'green_check.svg', :style => 'width: 22px; height: 22px;' %>
+                  <% else %>
+                    <%= image_tag 'red_x.svg', :style => 'width: 22px; height: 22px;' %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
     </div>
   <% else %>
     <% column_div = "col-md-12" %>
   <% end %>
 
-  <div class=<%= column_div %>>
-    <table class="table table-responsive table-hover table-bordered w-100 d-block d-md-table space-left">
+  <div class="<%= column_div %>">
+    <div class="panel panel-default">
+      <div class="panel-body">
+    <table class="table table-responsive w-100 d-block d-md-table">
       <colgroup>
         <col class="col-md-11">
         <col class="col-md-1">
@@ -74,6 +79,8 @@
         </tr>
       <% end %>
     </table>
+      </div>
+    </div>
   </div>
 
   <div class=<%= column_div %>>
@@ -99,4 +106,4 @@
       </table>
     <% end %>
   </div>
-</div>
+  </div>

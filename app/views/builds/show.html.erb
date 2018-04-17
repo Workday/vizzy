@@ -1,5 +1,7 @@
 <% breadcrumb :build, @build %>
 <div class="container">
+  <%= button_to 'Current Base Images', base_images_project_path(@build.project), :class => 'btn-primary btn pull-right' %>
+  <br>
   <div class="build-header">
     <h3>
       <% if @build.dev_build? %>
@@ -12,7 +14,6 @@
         </small>
       <% end %>
     </h3>
-    <%= button_to 'Current Base Images', base_images_project_path(@build.project), :class => 'btn-primary btn pull-right' %>
   </div>
   <br>
   <div class="panel panel-default">
