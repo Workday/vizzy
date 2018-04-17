@@ -29,6 +29,7 @@ module ApplicationHelper
   end
 
   def breaking_word_wrap(text, *args)
+    return text if text.nil?
     options = args.extract_options!
     unless args.blank?
       options[:line_width] = args[0] || 80
