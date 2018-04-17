@@ -19,7 +19,7 @@
       <tr>
         <td><%= link_to image.id, test_image_path(image.id) %></td>
         <td><%= image_tag image.image.url(:thumbnail) %></td>
-        <td><%= link_to image.test_key, test_image_path(image.id) %></td>
+        <td><%= link_to breaking_word_wrap(image.test_key), test_image_path(image.id) %></td>
         <td><%= link_to image.build.title, build_path(image.build.id) %></td>
         <td><%= image.approved ? 'Yes' : 'No' %></td>
         <td><%= link_to image.md5, test_image_path(image.id) %></td>

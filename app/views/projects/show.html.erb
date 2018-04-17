@@ -1,6 +1,6 @@
 <% breadcrumb :project, @project %>
-<div class="container">
   <%= button_to 'Current Base Images', base_images_project_path(@project), :class => 'btn-primary btn pull-right' %>
+<div class="container">
   <div class="col-md-12 no-padding" >
     <h2><%= @project.name %>
       <small>
@@ -10,14 +10,14 @@
   </div>
   <% pull_requests = @project.pull_requests %>
   <% if pull_requests.size > 0 %>
-    <% column_div = "col-md-6" %>
+    <% column_div = "col-md-6 no-padding" %>
 
     <div class="col-md-6 no-padding">
-      <table class="table table-responsive table-hover table-bordered w-100 d-block d-md-table">
+      <table class="table table-responsive table-hover table-bordered w-100 d-block d-md-table no-padding">
         <colgroup>
-          <col class="col-md-10">
-          <col class="col-md-1">
-          <col class="col-md-1">
+          <col class="col-md-10 no-padding">
+          <col class="col-md-1 no-padding">
+          <col class="col-md-1 no-padding">
         </colgroup>
         <thead>
         <tr>
@@ -44,11 +44,11 @@
       </table>
     </div>
   <% else %>
-    <% column_div = "col-md-12" %>
+    <% column_div = "col-md-12 no-padding" %>
   <% end %>
 
   <div class=<%= column_div %>>
-    <table class="table table-responsive table-hover table-bordered w-100 d-block d-md-table">
+    <table class="table table-responsive table-hover table-bordered w-100 d-block d-md-table no-padding">
       <colgroup>
         <col class="col-md-11">
         <col class="col-md-1">
@@ -78,10 +78,10 @@
 
   <div class=<%= column_div %>>
     <% if @project.uncommitted_builds.size > 0 && current_user.admin? %>
-      <table class="table table-responsive table-hover table-bordered w-100 d-block d-md-table">
+      <table class="table table-responsive table-hover table-bordered w-100 d-block d-md-table no-padding">
         <colgroup>
-          <col class="col-md-11">
-          <col class="col-md-1">
+          <col class="col-md-11 no-padding">
+          <col class="col-md-1 no-padding">
         </colgroup>
         <thead>
         <tr>

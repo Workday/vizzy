@@ -93,3 +93,13 @@ textarea {
 .table-responsive {
   display: table;
 }
+
+.no-padding {
+  padding: 0;
+  margin: 0;
+}
+
+.col-md-6 .col-md-12 .col-md-8 {
+  padding: 0;
+  margin: 0;
+}

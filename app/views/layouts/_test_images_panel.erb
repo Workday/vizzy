@@ -24,7 +24,7 @@
           <tr>
             <% if test_image&.image && test_image.test %>
               <td><%= link_to image_tag(test_image.image.url(:thumbnail)), test_image_path(test_image) %></td>
-              <td><%= link_to test_image.test_key, test_path(test_image.test) %> </td>
+              <td><%= link_to breaking_word_wrap(test_image.test_key), test_path(test_image.test) %> </td>
               <td>
             <% end %>
             <% if test_image.test.jira? %>
