@@ -1,25 +1,23 @@
-<div class="container">
-  <%= form_for(@build) do |f| %>
-    <%= render 'layouts/error_messages', object: f.object %>
+<%= form_for(@build) do |f| %>
+  <%= render 'layouts/error_messages', object: f.object %>
 
-    <div class="field">
-      <%= f.collection_select :project_id, Project.all, :id, :name, prompt: true %>
-      <%= f.label :project_id, 'Project' %>
-    </div>
-    <div class="field">
-      <%= f.label :url %><br>
-      <%= f.text_field :url %>
-    </div>
-    <div class="field">
-      <%= f.label :temporary %><br>
-      <%= f.check_box :temporary %>
-    </div>
-    <div class="field">
-      <%= f.label :title %><br>
-      <%= f.text_field :title %>
-    </div>
-    <div class="actions">
-      <%= f.submit %>
-    </div>
-  <% end %>
-</div>
+  <div class="field">
+    <%= f.collection_select :project_id, Project.all, :id, :name, prompt: true %>
+    <%= f.label :project_id, 'Project' %>
+  </div>
+  <div class="field">
+    <%= f.label :url %><br>
+    <%= f.text_field :url %>
+  </div>
+  <div class="field">
+    <%= f.label :temporary %><br>
+    <%= f.check_box :temporary %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
