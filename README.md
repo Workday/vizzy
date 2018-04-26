@@ -40,6 +40,8 @@ PostgreSQL is a database server, so you'll need to start it up to run Vizzy.
 `brew services start postgresql`
 
 ### Setup
+Fork the repository. Then clone your fork: `git clone https://github.com/<your-name>/vizzy.git`
+
 Vizzy uses Rails 5.1 encrypted secrets for its configuration. From the Vizzy project directory, run these commands
 
 Generate the encrypted secrets file and key.
@@ -155,12 +157,13 @@ Here is a sample run config for Master 1:
 
 ## Deployment
 
-This server is docker ready and can be deployed with any tool you want.
+This server is docker ready and can be deployed with any tool you want. Be sure to complete the configuration steps in [Setup](#setup) before deploying the server.
 
 - [Dockerfile](Dockerfile): Builds dependencies, adds the source code, precompiles the assets, and exposes port 3000.
 
 Travis CI publishes the latest master image to [Docker Hub](https://hub.docker.com/r/scottcbishop/vizzy/)
 
+#### Kubernetes
 We recommend a tool called [Kubernetes](https://kubernetes.io/docs/home/) (k8s), an opened sourced container cluster manager originally designed by Google, now owned by Cloud Native Computing. This tool aims to 
 provide a platform for automating deployment, scaling, and operations of application containers across clusters of hosts.
 
@@ -180,6 +183,28 @@ RUN_TESTS=false
 
 ./deploy-vizzy.sh --api-server=$API_SERVER --bearer-token=$BEARER --rails-env=$RAILS_ENV --vizzy-version=$GIT_COMMIT --namespace=$NAMESPACE --vizzy-uri=$VIZZY_URI --replica-pods=$REPLICA_PODS --memory=$MEMORY --docker-registry=$DOCKER_REGISTRY --run-tests=$RUN_TESTS
 ```
+
+Vizzy scales well, we use 5 replica pods each with 8Gi memory. 
+
+Other options:
+[Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/)
+[AWS EKS] (https://aws.amazon.com/eks/)
+
+#### Heroku
+
+Create an account, and select new project and choose a name. Choose type "Container Registry" Note: requires [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli). Select the tap "Resources" and choose the add-on Heroku Postgres to provision the database. 
+
+Since you have the configurations in your repo, build and push the docker container to heroku.
+
+`docker build --build-arg RAILS_MASTER_KEY=[encryption-key-here] --tag registry.heroku.com/[project-name-here]/web .`
+
+`docker push registry.heroku.com/[project-name-here]/web`
+
+To get complete the setup of the database you need to run the rails migrations
+
+`heroku run rake db:create db:migrate`
+
+You should now be able to see Vizzy running at https://[your-app-name-here].herokuapp.com/
 
 ### Our Current Deployment Setup
 
