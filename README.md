@@ -19,6 +19,8 @@ Vizzy is built with a plugin architecture. Plugins implement build hooks (build_
 
 [Vizzy Client-Server Diagram](https://user-images.githubusercontent.com/1944329/38047014-ff889078-3275-11e8-9b02-53fa9591e0f7.png)
 
+[Example Screenshots](https://github.com/Workday/vizzy/wiki/Examples)
+
 ## Getting Started
 ### Prerequisites
 Ruby 2.3.1 and Rails 5.1.4. See http://installrails.com/ for install instructions.
