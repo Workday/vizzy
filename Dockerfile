@@ -4,7 +4,7 @@ LABEL maintainer="Scott Bishop - ScottBishop70@gmail.com"
 
 # Install tools & libs
 RUN apt-get update
-RUN apt-get install -y build-essential checkinstall libx11-dev libxext-dev zlib1g-dev libpng12-dev libjpeg-dev libfreetype6-dev libxml2-dev nodejs
+RUN apt-get install -y build-essential checkinstall libx11-dev libxext-dev zlib1g-dev libpng-dev libjpeg-dev libfreetype6-dev libxml2-dev nodejs
 
 RUN apt-get install -y imagemagick libmagick++-dev libmagic-dev libmagickwand-dev vim libpq-dev && apt-get clean
 
