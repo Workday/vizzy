@@ -305,6 +305,9 @@ In order to run System tests, fill out the system test encrypted secrets. System
 Join the developer community
 https://join.slack.com/t/vizzy-dev/shared_invite/enQtMzQxMzI4MjE5MTA3LTNmM2U5MzgzN2U4NzIxZTMzNDI2ZjE5ZDNmNTBhYzUxYzFiMGIzNjE0YWNiYjRlZjhhNWM5YjAzOGViNDA5YzQ
 
+## Blogs
+https://medium.com/workday-engineering/testing-mobile-application-views-at-workday-c5f96ee14dc6
+
 ## Contributing
 
 1. Fork the repo!
