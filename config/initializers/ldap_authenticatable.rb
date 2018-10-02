@@ -13,10 +13,6 @@ module Devise
             user = User.find_or_create_by(email: email)
           elsif !password.blank?
             # Use LDAP for production environment
-            unless contains_ldap_email_domain(auth_config)
-              return fail(:invalid_email_domain)
-            end
-
             ldap = Net::LDAP.new
             ldap.host = auth_config['ldap_host']
             ldap.port = auth_config['ldap_port']
@@ -24,8 +20,14 @@ module Devise
             internal_domain = auth_config['ldap_email_internal_domain']
             ldap.auth username_from_email + internal_domain, password
 
-            if ldap.host.blank? || ldap.port.blank? || ldap.base.blank? || internal_domain.blank?
-              raise "ldap auth configuration missing -- host: #{ldap.host}, port: #{ldap.port}, base: #{ldap.base}, internal_domain: #{internal_domain}"
+            ldap_email_domain = auth_config['ldap_email_domain']
+
+            if ldap.host.blank? || ldap.port.blank? || ldap.base.blank? || internal_domain.blank? || ldap_email_domain.blank?
+              raise "ldap auth configuration missing -- host: #{ldap.host}, port: #{ldap.port}, base: #{ldap.base}, internal_domain: #{internal_domain}, ldap_email_domain: #{ldap_email_domain}"
+            end
+
+            unless contains_ldap_email_domain(ldap_email_domain)
+              return fail(:invalid_email_domain)
             end
 
             if ldap.bind
@@ -45,8 +47,8 @@ module Devise
         end
       end
 
-      def contains_ldap_email_domain(auth_config)
-        if email.downcase.include? auth_config['ldap_email_domain']
+      def contains_ldap_email_domain(ldap_email_domain)
+        if email.downcase.include? ldap_email_domain
           true
         else
           false
