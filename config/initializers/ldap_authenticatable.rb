@@ -13,6 +13,10 @@ module Devise
             user = User.find_or_create_by(email: email)
           elsif !password.blank?
             # Use LDAP for production environment
+            unless contains_ldap_email_domain(auth_config)
+              return fail(:invalid_email_domain)
+            end
+
             ldap = Net::LDAP.new
             ldap.host = auth_config['ldap_host']
             ldap.port = auth_config['ldap_port']
@@ -27,18 +31,25 @@ module Devise
             if ldap.bind
               user = User.find_or_create_by(email: email)
             else
-              fail(:invalid_login)
-              return
+              return fail(:invalid_login)
             end
           end
           if user.nil?
-            fail(:invalid_login)
+            return fail(:invalid_login)
           else
             if user.new_record?
               user.save!
             end
             success!(user)
           end
+        end
+      end
+
+      def contains_ldap_email_domain(auth_config)
+        if email.downcase.include? auth_config['ldap_email_domain']
+          true
+        else
+          false
         end
       end
 
