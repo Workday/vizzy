@@ -75,14 +75,22 @@ class BuildsController < ApplicationController
   # POST /fail
   # POST /fail.json
   def fail
-    @build.fail_with_message(build_params[:failure_message])
-    results = PluginManager.instance.for_project(@build.project).run_build_failed_hook(@build)
-    if results[:errors].blank?
-      format.html {redirect_to @build, notice: 'Build failed.'}
-      format.json {render :show, status: :ok, location: @build}
-    else
-      format.html {render :new}
-      format.json {render json: {error: results[:errors]}, status: :internal_server_error}
+    respond_to do |format|
+      if !@build.temporary?
+        format.html {redirect_to build_path(@build), alert: 'Cannot fail a build that has already been committed'}
+        format.json {render json: {error: 'Cannot fail a build that has already been committed'}, status: :bad_request}
+      else
+        @build.fail_with_message(build_params[:failure_message])
+        results = PluginManager.instance.for_project(@build.project).run_build_failed_hook(@build)
+        error_messages = results[:errors]
+        if error_messages.blank?
+          format.html {redirect_to @build, notice: 'Build failed.'}
+          format.json {render :show, status: :ok, location: @build}
+        else
+          format.html {render :new}
+          format.json {render json: {error: error_messages}, status: :internal_server_error}
+        end
+      end
     end
   end
 

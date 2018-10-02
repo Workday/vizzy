@@ -69,8 +69,7 @@ HTTP_RETRY_ERRORS = [
     Errno::ECONNRESET,
     Errno::EPIPE,
     Errno::ETIMEDOUT,
-    Net::HTTPServiceUnavailable,
-    Net::HTTPInternalServerError,
+    Net::HTTPServiceUnavailable
 ]
 
 # Fetch Request And Handle Errors
@@ -135,9 +134,6 @@ def push_image_to_server(file_path, ancestry, build_id, thread_id, http)
         if response.code == '502'
           # retry upload when we see a 502 server gateway error. Treat it as a read timeout.
           raise Net::ReadTimeout
-        elsif response.code == '500'
-          # retry upload when we see a 500 internal server error (due to nginx error).
-          raise Net::HTTPInternalServerError
         end
         response
       end

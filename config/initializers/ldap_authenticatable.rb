@@ -20,25 +20,38 @@ module Devise
             internal_domain = auth_config['ldap_email_internal_domain']
             ldap.auth username_from_email + internal_domain, password
 
-            if ldap.host.blank? || ldap.port.blank? || ldap.base.blank? || internal_domain.blank?
-              raise "ldap auth configuration missing -- host: #{ldap.host}, port: #{ldap.port}, base: #{ldap.base}, internal_domain: #{internal_domain}"
+            ldap_email_domain = auth_config['ldap_email_domain']
+
+            if ldap.host.blank? || ldap.port.blank? || ldap.base.blank? || internal_domain.blank? || ldap_email_domain.blank?
+              raise "ldap auth configuration missing -- host: #{ldap.host}, port: #{ldap.port}, base: #{ldap.base}, internal_domain: #{internal_domain}, ldap_email_domain: #{ldap_email_domain}"
+            end
+
+            unless contains_ldap_email_domain(ldap_email_domain)
+              return fail(:invalid_email_domain)
             end
 
             if ldap.bind
               user = User.find_or_create_by(email: email)
             else
-              fail(:invalid_login)
-              return
+              return fail(:invalid_login)
             end
           end
           if user.nil?
-            fail(:invalid_login)
+            return fail(:invalid_login)
           else
             if user.new_record?
               user.save!
             end
             success!(user)
           end
+        end
+      end
+
+      def contains_ldap_email_domain(ldap_email_domain)
+        if email.downcase.include? ldap_email_domain
+          true
+        else
+          false
         end
       end
 
