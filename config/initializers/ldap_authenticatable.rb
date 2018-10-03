@@ -26,32 +26,21 @@ module Devise
               raise "ldap auth configuration missing -- host: #{ldap.host}, port: #{ldap.port}, base: #{ldap.base}, internal_domain: #{internal_domain}, ldap_email_domain: #{ldap_email_domain}"
             end
 
-            unless contains_ldap_email_domain(ldap_email_domain)
-              return fail(:invalid_email_domain)
-            end
-
-            if ldap.bind
+            if email.downcase.include?(ldap_email_domain) && ldap.bind
               user = User.find_or_create_by(email: email)
             else
-              return fail(:invalid_login)
+              fail(:invalid_login)
+              return
             end
           end
           if user.nil?
-            return fail(:invalid_login)
+            fail(:invalid_login)
           else
             if user.new_record?
               user.save!
             end
             success!(user)
           end
-        end
-      end
-
-      def contains_ldap_email_domain(ldap_email_domain)
-        if email.downcase.include? ldap_email_domain
-          true
-        else
-          false
         end
       end
 
