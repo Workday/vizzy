@@ -1,6 +1,12 @@
 defaults: &default
   devise:
-    auth_strategy: 'local'
+    auth_strategy: 'LDAP'
+    ldap_email_domain: '@workday.com'
+    ldap_host: '10.140.230.35'
+    ldap_port: '389'
+    ldap_base: 'DC=workdayinternal,DC=com'
+    ldap_email_internal_domain: '@workdayinternal.com'
+    password_placeholder: "Active Directory Password"
   jira:
     create_issues: yes
   slack:

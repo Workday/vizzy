@@ -49,28 +49,29 @@ export VIZZY_LIMITS_MEMORY=$memory
 export RAILS_ENV=$rails_env
 export DOCKER_REGISTRY=$docker_registry
 
-kubectl config --kubeconfig=k8sconfig set-cluster k8s --server=$api_server
-kubectl config --kubeconfig=k8sconfig set-credentials jenkins --token=$bearer_token
-kubectl config --kubeconfig=k8sconfig set-context k8s --cluster=k8s --user=jenkins
-kubectl config --kubeconfig=k8sconfig use-context k8s
+#k config --kubeconfig=k8sconfig set-cluster k8s --server=$api_server
+#k config --kubeconfig=k8sconfig set-credentials jenkins --token=$bearer_token
+#k config --kubeconfig=k8sconfig set-context k8s --cluster=k8s --user=jenkins
+#k config --kubeconfig=k8sconfig use-context k8s
+
+export KUBECONFIG=~/Desktop/kubeconfig
 
 ./render-template.sh kubernetes-vizzy-config.template.yaml > vizzy-config.yaml
 ./render-template.sh kubernetes-postgres-config.template.yaml > postgres-config.yaml
 
-kubectl --kubeconfig=k8sconfig --namespace=$namespace apply -f vizzy-pvc.yaml
-kubectl --kubeconfig=k8sconfig --namespace=$namespace apply -f postgres-config.yaml
-kubectl --kubeconfig=k8sconfig --namespace=$namespace apply -f vizzy-config.yaml
+kubectl --insecure-skip-tls-verify=true apply -f vizzy-pvc.yaml
+kubectl --insecure-skip-tls-verify=true apply -f postgres-config.yaml
+kubectl --insecure-skip-tls-verify=true apply -f vizzy-config.yaml
 
 rm vizzy-config.yaml
 rm postgres-config.yaml
-rm k8sconfig
 
 sleep 30
 
 # Get the running visual pod and run the tests inside the pod
-TEST_POD=$(kubectl get pods --namespace=$namespace | grep -m1 vizzy | awk '{print $1}')
+TEST_POD=$(kubectl --insecure-skip-tls-verify=true get pods | grep -m1 vizzy | awk '{print $1}')
 echo ${TEST_POD}
-kubectl exec ${TEST_POD} rake db:migrate --namespace=$namespace
+kubectl --insecure-skip-tls-verify=true exec ${TEST_POD} rake db:migrate
 
 if [ $? -ne 0 ]; then
     echo "Could not run migrations, pod does not exist. Exiting 1..."
@@ -79,7 +80,7 @@ fi
 
 if [ "$run_tests" = true ] ; then
     echo 'Running unit tests...'
-    kubectl exec ${TEST_POD} rake test --namespace=$namespace
+    kubectl --insecure-skip-tls-verify=true exec ${TEST_POD} rake test
     TEST_STATUS=$?
 
     if [ ${TEST_STATUS} -ne 0 ]; then
@@ -90,7 +91,7 @@ if [ "$run_tests" = true ] ; then
     fi
 
     # TODO: Enable system tests on CI
-    #kubectl exec ${TEST_POD} rails test:system --namespace=$namespace
+    #kubectl --insecure-skip-tls-verify=true exec ${TEST_POD} rails test:system --namespace=$namespace
     #TEST_STATUS=$?
     #
     #if [ ${TEST_STATUS} -ne 0 ]; then
@@ -100,8 +101,8 @@ if [ "$run_tests" = true ] ; then
     #fi
 
     # Clean up deployment so nothing is left running
-    kubectl delete deployment vizzy --namespace=$namespace
-    kubectl delete deployment postgres --namespace=$namespace
+    kubectl --insecure-skip-tls-verify=true delete deployment vizzy
+    kubectl --insecure-skip-tls-verify=true delete deployment postgres
 
     exit ${TEST_STATUS}
 fi
