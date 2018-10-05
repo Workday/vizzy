@@ -36,4 +36,11 @@ service:
   http:
     port: 3000
 
+nginxIngress:
+  enabled: true
+
+# Chart dependency
+postgresql:
+  enabled: true
+
 secrets:
