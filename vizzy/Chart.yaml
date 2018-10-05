@@ -1,0 +1,10 @@
+name: vizzy
+home: https://github.com/Workday/vizzy
+version: 0.1.0
+description: A powerful Ruby on Rails web server that facilitates Visual Automation.
+icon: https://user-images.githubusercontent.com/1944329/38047018-ffe4638a-3275-11e8-8385-68c15493a908.png
+sources:
+  - https://github.com/Workday/vizzy
+maintainers:
+  - name: Scott Bishop
+    email: scottbishop70@gmail.com
