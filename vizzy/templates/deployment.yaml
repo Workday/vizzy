@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ .Chart.Name }}
@@ -18,45 +18,45 @@ spec:
         app: {{ .Chart.Name }}
         release: {{ .Release.Name }}
     spec:
+      volumes:
+      - name: {{ .Values.volumes.name }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.volumes.claimName }}
+      imagePullSecrets:
+      - name: {{ .Values.image.pullSecret }}
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        ports:
-          - name: http
-            containerPort: {{ .Values.service.http.port }}
-            protocol: TCP
-      {{- if .Values.resources }}
-        resources:
-{{- toYaml .Values.resources | trimSuffix "\n" | nindent 12 }}
-      {{- end }}
         volumeMounts:
-          - name: {{ .Values.volumeMounts.name }}
-            mountPath: {{ .Values.volumeMounts.mountPath }}
+        - name: {{ .Values.volumeMounts.name }}
+          mountPath: {{ .Values.volumeMounts.mountPath }}
+        ports:
+        - name: http
+          containerPort: {{ .Values.service.http.port }}
+          protocol: TCP
+        resources:
+          limits:
+            memory: {{ .Values.resources.limits.memory }}
+          requests:
+            memory: {{ .Values.resources.requests.memory }}
         env:
-          - name: {{ .Values.env.vizzyUri.name }}
-            value: {{ .Values.env.vizzyUri.value }}
-          - name: {{ .Values.env.railsEnv.name }}
-            value: {{ .Values.env.railsEnv.value }}
-          - name: POSTGRES_USER
-            valueFrom:
-              secretKeyRef:
-                name: vizzy-postgres-secret
-                key: username
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: vizzy-postgres-secret
-                key: password
-          - name: RAILS_MASTER_KEY
-            valueFrom:
-              secretKeyRef:
-                name: vizzy-rails-master-key-secret
-                key: token
-        imagePullSecrets:
-          - name: {{ .Values.image.pullSecret }}
-        serviceAccountName: {{ .Chart.Name }}
-        volumes:
-          - name: {{ .Values.volumes.name }}
-            persistentVolumeClaim:
-              claimName: {{ .Values.volumes.claimName }}
+        - name: {{ .Values.env.vizzyUri.name }}
+          value: {{ .Values.env.vizzyUri.value }}
+        - name: {{ .Values.env.railsEnv.name }}
+          value: {{ .Values.env.railsEnv.value }}
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: vizzy-postgres-secret
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: vizzy-postgres-secret
+              key: password
+        - name: RAILS_MASTER_KEY
+          valueFrom:
+            secretKeyRef:
+              name: vizzy-rails-master-key-secret
+              key: token
