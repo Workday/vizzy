@@ -18,19 +18,13 @@ spec:
         app: {{ .Chart.Name }}
         release: {{ .Release.Name }}
     spec:
-      volumes:
-      - name: {{ .Values.volumes.name }}
-        persistentVolumeClaim:
-          claimName: {{ .Values.volumes.claimName }}
-      imagePullSecrets:
-      - name: {{ .Values.image.pullSecret }}
       containers:
       - name: {{ .Chart.Name }}
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         volumeMounts:
         - name: {{ .Values.volumeMounts.name }}
-          mountPath: {{ .Values.volumeMounts.mountPath }}
+          mountPath: /app/public/visual_images
         ports:
         - name: http
           containerPort: {{ .Values.service.http.port }}
@@ -60,3 +54,9 @@ spec:
             secretKeyRef:
               name: vizzy-rails-master-key-secret
               key: token
+      volumes:
+      - name: {{ .Values.volumes.name }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.volumes.claimName }}
+      imagePullSecrets:
+      - name: {{ .Values.image.pullSecret }}
