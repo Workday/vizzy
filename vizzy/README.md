@@ -16,7 +16,7 @@ After completing that, add another kubernetes secret for the rails master key th
 kubectl create secret generic vizzy-rails-master-key-secret --from-literal=token=**********************
 ```
 
-Then you can deploy the helm chart, overriding any [values](https://github.com/Workday/vizzy/vizzy/values.yaml) necessary. Run the install with this directory using the database username and password from above.
+Then you can deploy the helm chart, overriding any [values](https://github.com/Workday/vizzy/blob/master/vizzy/values.yaml) necessary. Run the install with this directory using the database username and password from above.
 
 ```bash
 helm install . \
