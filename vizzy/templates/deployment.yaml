@@ -39,6 +39,11 @@ spec:
           value: {{ .Values.env.vizzyUri.value }}
         - name: {{ .Values.env.railsEnv.name }}
           value: {{ .Values.env.railsEnv.value }}
+        - name: POSTGRES_HOST
+          valueFrom:
+            secretKeyRef:
+              name: vizzy-postgres-secret
+              key: host
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
