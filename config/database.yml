@@ -13,7 +13,7 @@ production: &production
   pool: <%= ENV["DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 20 %>
   timeout: 5000
   host: <%= ENV['POSTGRES_HOST'] || postgres %>
-  port: 5432
+  port: <%= ENV['POSTGRES_PORT'] || 5432 %>
   username: <%= ENV['POSTGRES_USER'] %>
   password: <%= ENV['POSTGRES_PASSWORD'] %>
   encoding: utf8

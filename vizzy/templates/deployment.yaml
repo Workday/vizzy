@@ -44,6 +44,11 @@ spec:
             secretKeyRef:
               name: vizzy-postgres-secret
               key: host
+        - name: POSTGRES_PORT
+            valueFrom:
+              secretKeyRef:
+                name: vizzy-postgres-secret
+                key: port
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
