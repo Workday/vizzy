@@ -59,6 +59,11 @@ spec:
             secretKeyRef:
               name: vizzy-postgres-secret
               key: password
+        - name: POSTGRES_SCHEMA
+           valueFrom:
+             secretKeyRef:
+              name: vizzy-postgres-secret
+              key: schema_search_path
         - name: RAILS_MASTER_KEY
           valueFrom:
             secretKeyRef:

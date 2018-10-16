@@ -5,7 +5,12 @@ This helm chart has a top level Vizzy chart, with a Postgresql chart defined as 
 First pick a username and password for the database and create a kubernetes secret. Be sure to include the host and post:
 
 ```bash
-kubectl create secret generic vizzy-postgres-secret --from-literal=host=postgres --from-literal=port=5432 --from-literal=username=postgres --from-literal=password=********
+kubectl create secret generic vizzy-postgres-secret \
+ --from-literal=host=postgres \ # optional, default is postgres
+ --from-literal=port=5432 \ # optional, default is 5432
+ --from-literal=username=postgres \ # required
+ --from-literal=password=******** \ # required
+ --from-literal=schema_search_path=public # optional, default is public
 ```
 
 If you haven't setup the server with credentials follow the [setup](https://github.com/Workday/vizzy#setup) section on the readme.
