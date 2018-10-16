@@ -14,8 +14,10 @@ production: &production
   timeout: 5000
   host: <%= ENV['POSTGRES_HOST'] || 'postgres' %>
   port: <%= ENV['POSTGRES_PORT'] || 5432 %>
+  database: <%= ENV['POSTGRES_DATABASE_NAME'] || 'vizzy' %>
   username: <%= ENV['POSTGRES_USER'] %>
   password: <%= ENV['POSTGRES_PASSWORD'] %>
+  schema_search_path: <%= ENV['POSTGRES_SCHEMA'] || 'public' %>
   encoding: utf8
 
 # Warning: The database defined as "test" will be erased and

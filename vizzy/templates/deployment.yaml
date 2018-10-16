@@ -44,11 +44,19 @@ spec:
             secretKeyRef:
               name: vizzy-postgres-secret
               key: host
+              optional: true
         - name: POSTGRES_PORT
-            valueFrom:
-              secretKeyRef:
-                name: vizzy-postgres-secret
-                key: port
+          valueFrom:
+            secretKeyRef:
+              name: vizzy-postgres-secret
+              key: port
+              optional: true
+        - name: POSTGRES_DATABASE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: vizzy-postgres-secret
+              key: database_name
+              optional: true
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
@@ -59,6 +67,12 @@ spec:
             secretKeyRef:
               name: vizzy-postgres-secret
               key: password
+        - name: POSTGRES_SCHEMA
+          valueFrom:
+            secretKeyRef:
+              name: vizzy-postgres-secret
+              key: schema_search_path
+              optional: true
         - name: RAILS_MASTER_KEY
           valueFrom:
             secretKeyRef:
