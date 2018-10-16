@@ -8,6 +8,7 @@ First pick a username and password for the database and create a kubernetes secr
 kubectl create secret generic vizzy-postgres-secret \
  --from-literal=host=postgres \ # optional, default is postgres
  --from-literal=port=5432 \ # optional, default is 5432
+ --from-literal=database_name=vizzy \ # optional, default is vizzy
  --from-literal=username=postgres \ # required
  --from-literal=password=******** \ # required
  --from-literal=schema_search_path=public # optional, default is public
