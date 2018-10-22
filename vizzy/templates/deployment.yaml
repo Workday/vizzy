@@ -1,0 +1,86 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    app: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        volumeMounts:
+        - name: {{ .Values.volumeMounts.name }}
+          mountPath: /app/public/visual_images
+        ports:
+        - name: http
+          containerPort: {{ .Values.service.http.port }}
+          protocol: TCP
+        resources:
+          limits:
+            memory: {{ .Values.resources.limits.memory }}
+          requests:
+            memory: {{ .Values.resources.requests.memory }}
+        env:
+        - name: {{ .Values.env.vizzyUri.name }}
+          value: {{ .Values.env.vizzyUri.value }}
+        - name: {{ .Values.env.railsEnv.name }}
+          value: {{ .Values.env.railsEnv.value }}
+        - name: POSTGRES_HOST
+          valueFrom:
+            secretKeyRef:
+              name: vizzy-postgres-secret
+              key: host
+              optional: true
+        - name: POSTGRES_PORT
+          valueFrom:
+            secretKeyRef:
+              name: vizzy-postgres-secret
+              key: port
+              optional: true
+        - name: POSTGRES_DATABASE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: vizzy-postgres-secret
+              key: database_name
+              optional: true
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: vizzy-postgres-secret
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: vizzy-postgres-secret
+              key: password
+        - name: POSTGRES_SCHEMA
+          valueFrom:
+            secretKeyRef:
+              name: vizzy-postgres-secret
+              key: schema_search_path
+              optional: true
+        - name: RAILS_MASTER_KEY
+          valueFrom:
+            secretKeyRef:
+              name: vizzy-rails-master-key-secret
+              key: token
+      volumes:
+      - name: {{ .Values.volumes.name }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.volumes.claimName }}
+      imagePullSecrets:
+      - name: {{ .Values.image.pullSecret }}
