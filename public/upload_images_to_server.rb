@@ -193,10 +193,8 @@ def poll_for_commit(build_id, images_uploaded)
   puts 'Waiting for commit to finalize'
   sleep 2 # Sleep 2 before the first check so we can catch the 'simple' commits that have no diffs quickly
 
-  # floor: 360 tries * 10 seconds == 1 hour
-  max_tries = 360
-  # scaling as needed
-  max_tries = max_tries + images_uploaded
+  # 360 tries * 10 seconds == 1 hour + scaling as needed
+  max_tries = 360 + images_uploaded
 
   time_in_seconds = max_tries * 10
   time_in_minutes = time_in_seconds / 60
