@@ -22,3 +22,6 @@ RUN rake assets:precompile
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]
+
+# remove file limits for ImageMagick for builds that calculate lots of diffs
+RUN rm /etc/ImageMagick-6/policy.xml
