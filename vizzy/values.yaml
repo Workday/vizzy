@@ -43,3 +43,6 @@ postgresql:
   enabled: true
 
 secrets:
+
+ingress:
+  proxyBodySize: 100m
