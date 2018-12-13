@@ -39,6 +39,10 @@ service:
 nginxIngress:
   enabled: true
 
+horizontalPodAutoscaler:
+  enabled: false
+  targetCPUUtilizationPercentage: 80
+
 # Chart dependency
 postgresql:
   enabled: true
