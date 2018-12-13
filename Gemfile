@@ -69,7 +69,7 @@ gem 'i18n', '0.7.0'
 gem 'ancestry'
 
 gem 'minitest-rails'
-gem 'minitest-reporters', '~> 1.1.14'
+gem 'minitest-reporters'
 
 # Schedule cron tasks
 gem 'whenever', require: false

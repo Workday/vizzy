@@ -18,7 +18,8 @@ COPY . /app
 # add encription key to decode secrets
 ARG RAILS_MASTER_KEY
 
-RUN rake assets:precompile
+# precompile rails assets and remove file limits for ImageMagick for builds that calculate lots of diffs
+RUN rake assets:precompile && rm -f /etc/ImageMagick-6/policy.xml
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]
