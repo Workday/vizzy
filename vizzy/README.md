@@ -28,7 +28,11 @@ Then you can deploy the helm chart, overriding any [values](https://github.com/W
 helm install . \
     --set image.repository=scottcbishop/vizzy \
     --set image.tag=v3.1.1 \
+    --set image.pullSecret=myregistrykey \
     --set env.vizzyUri.value=vizzy.com \
     --set service.type=LoadBalancer \
-    --set replicaCount=1
+    --set replicaCount=1 \
+    --set postgresql.postgresUser=postgres \
+    --set postgresql.postgresPassword=******** \
+    --set postgresql.postgresDatabase=vizzy
  ```
