@@ -37,6 +37,7 @@ service:
 
 nginxIngress:
   enabled: true
+  proxyBodySize: 100m
 
 # Chart dependency
 postgresql:
@@ -44,5 +45,3 @@ postgresql:
 
 secrets:
 
-ingress:
-  proxyBodySize: 100m
