@@ -82,5 +82,7 @@ spec:
       - name: {{ .Values.volumes.name }}
         persistentVolumeClaim:
           claimName: {{ .Values.volumes.claimName }}
+{{- if .Values.image.pullSecret }}
       imagePullSecrets:
       - name: {{ .Values.image.pullSecret }}
+{{- end }}
