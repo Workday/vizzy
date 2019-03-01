@@ -21,7 +21,7 @@ gem 'turbolinks', '~> 5.1.0'
 gem 'jbuilder', '~> 2.5'
 
 gem 'bootswatch-rails'
-gem 'bootstrap-sass', '~> 3.3.5'
+gem 'bootstrap-sass', '~> 3.4.1'
 gem 'devise-bootstrap-views'
 gem 'sprockets-rails', require: 'sprockets/railtie'
 
