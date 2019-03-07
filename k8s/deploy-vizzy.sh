@@ -59,9 +59,9 @@ export KUBECONFIG=~/Desktop/kubeconfig
 ./render-template.sh kubernetes-vizzy-config.template.yaml > vizzy-config.yaml
 ./render-template.sh kubernetes-postgres-config.template.yaml > postgres-config.yaml
 
-kubectl --insecure-skip-tls-verify=true apply -f vizzy-pvc.yaml
-kubectl --insecure-skip-tls-verify=true apply -f postgres-config.yaml
-kubectl --insecure-skip-tls-verify=true apply -f vizzy-config.yaml
+./kubectl --insecure-skip-tls-verify=true apply -f vizzy-pvc.yaml
+./kubectl --insecure-skip-tls-verify=true apply -f postgres-config.yaml
+./kubectl --insecure-skip-tls-verify=true apply -f vizzy-config.yaml
 
 rm vizzy-config.yaml
 rm postgres-config.yaml
@@ -69,9 +69,9 @@ rm postgres-config.yaml
 sleep 30
 
 # Get the running visual pod and run the tests inside the pod
-TEST_POD=$(kubectl --insecure-skip-tls-verify=true get pods | grep -m1 vizzy | awk '{print $1}')
+TEST_POD=$(./kubectl --insecure-skip-tls-verify=true get pods | grep -m1 vizzy | awk '{print $1}')
 echo ${TEST_POD}
-kubectl --insecure-skip-tls-verify=true exec ${TEST_POD} rake db:migrate
+./kubectl --insecure-skip-tls-verify=true exec ${TEST_POD} rake db:migrate
 
 if [ $? -ne 0 ]; then
     echo "Could not run migrations, pod does not exist. Exiting 1..."
@@ -80,7 +80,7 @@ fi
 
 if [ "$run_tests" = true ] ; then
     echo 'Running unit tests...'
-    kubectl --insecure-skip-tls-verify=true exec ${TEST_POD} rake test
+    ./kubectl --insecure-skip-tls-verify=true exec ${TEST_POD} rake test
     TEST_STATUS=$?
 
     if [ ${TEST_STATUS} -ne 0 ]; then
@@ -91,7 +91,7 @@ if [ "$run_tests" = true ] ; then
     fi
 
     # TODO: Enable system tests on CI
-    #kubectl --insecure-skip-tls-verify=true exec ${TEST_POD} rails test:system --namespace=$namespace
+    #./kubectl --insecure-skip-tls-verify=true exec ${TEST_POD} rails test:system --namespace=$namespace
     #TEST_STATUS=$?
     #
     #if [ ${TEST_STATUS} -ne 0 ]; then
@@ -101,8 +101,8 @@ if [ "$run_tests" = true ] ; then
     #fi
 
     # Clean up deployment so nothing is left running
-    kubectl --insecure-skip-tls-verify=true delete deployment vizzy
-    kubectl --insecure-skip-tls-verify=true delete deployment postgres
+    ./kubectl --insecure-skip-tls-verify=true delete deployment vizzy
+    ./kubectl --insecure-skip-tls-verify=true delete deployment postgres
 
     exit ${TEST_STATUS}
 fi
