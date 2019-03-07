@@ -15,7 +15,7 @@ kubectl create secret generic vizzy-postgres-secret \
 ```
 
 If you haven't setup the server with credentials follow the [setup](https://github.com/Workday/vizzy#setup) section on the readme.
- 
+
 After completing that, add another kubernetes secret for the rails master key that was generated and placed into `secrets.yml.key`. *Do not check in the encryption key into the repository,*
 
 ```bash
@@ -27,7 +27,7 @@ Then you can deploy the helm chart, overriding any [values](https://github.com/W
 ```bash
 helm install . \
     --set image.repository=scottcbishop/vizzy \
-    --set image.tag=3.1.1 \
+    --set image.tag=v3.1.1 \
     --set image.pullSecret=myregistrykey \
     --set env.vizzyUri.value=vizzy.com \
     --set service.type=LoadBalancer \
@@ -36,5 +36,3 @@ helm install . \
     --set postgresql.postgresPassword=******** \
     --set postgresql.postgresDatabase=vizzy
  ```
- 
-    

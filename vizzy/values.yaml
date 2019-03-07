@@ -5,8 +5,8 @@
 replicaCount: 5
 image:
   repository: scottcbishop/vizzy
-  tag: v3.1.1
-  pullSecret: dockerhub.com
+  tag: latest
+  pullSecret: ""
   pullPolicy: Always
 
 volumeMounts:
@@ -44,4 +44,3 @@ postgresql:
   enabled: true
 
 secrets:
-
