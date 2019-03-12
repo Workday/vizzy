@@ -66,7 +66,7 @@ class BambooPlugin < Plugin
     response
   end
 
-  # Add bammboo url from project plugin settings
+  # Add bamboo url from project plugin settings
   # Params:
   # - project: project to look for plugin settings
   def get_base_bamboo_url(project)

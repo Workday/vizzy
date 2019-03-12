@@ -66,14 +66,15 @@ class ProjectsController < ApplicationController
 
   def save_plugin_settings(settings, enabled_plugins)
     return if settings.blank?
-    settings.each do |setting|
-      settings_hash = settings[setting]
-      settings_hash[:enabled] = if enabled_plugins.blank?
-                                  false
-                                else
-                                  enabled_plugins[setting] == 'true'
-                                end
-      @project.plugin_settings[setting] = settings_hash
+    PluginManager.instance.for_project(@project).plugins_hash.each do |plugin|
+      plugin_key = plugin.first
+      plugin_settings_hash = settings[plugin_key] || {}
+      plugin_settings_hash[:enabled] = if enabled_plugins.blank?
+                                         false
+                                       else
+                                         enabled_plugins[plugin_key] == 'true'
+                                       end
+      @project.plugin_settings[plugin_key] = plugin_settings_hash
     end
   end
 

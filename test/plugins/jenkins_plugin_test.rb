@@ -10,6 +10,7 @@ class JenkinsPluginTest < ActiveSupport::TestCase
     @build.save
 
     @jenkins_plugin = JenkinsPlugin.new(@unique_id)
+    @project_settings_hash = @build.project.plugin_settings
   end
 
   test 'verify hook calls update description' do
@@ -22,5 +23,9 @@ class JenkinsPluginTest < ActiveSupport::TestCase
   test 'jenkins plugin loaded correctly' do
     plugin_manager = PluginManager.instance.for_project(@build.project)
     assert_not_nil(plugin_manager.plugins_hash[@unique_id])
+  end
+
+  test 'jenkins plugin disabled' do
+    assert_equal(false, @project_settings_hash[@jenkins_plugin.unique_id][:enabled])
   end
 end
