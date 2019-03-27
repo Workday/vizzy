@@ -1,25 +1,27 @@
 #Dockerfile
-FROM ruby:2.3.7
+FROM ruby:2.3.7 AS base
 LABEL maintainer="Scott Bishop - ScottBishop70@gmail.com"
 
-# Install tools & libs
-RUN apt-get update
-RUN apt-get install -y build-essential checkinstall libx11-dev libxext-dev zlib1g-dev libpng-dev libjpeg-dev libfreetype6-dev libxml2-dev nodejs
-
-RUN apt-get install -y imagemagick libmagick++-dev libmagic-dev libmagickwand-dev vim libpq-dev && apt-get clean
+ENV BUILD_PACKAGES="build-essential checkinstall libx11-dev libmagic-dev libpq-dev libmagick++-dev"
 
 WORKDIR /app
-COPY Gemfile* ./
-RUN gem install bundler
-RUN bundle install
+# Install base tools
+RUN apt-get update && \
+    apt-get install -y nodejs imagemagick vim ${BUILD_PACKAGES} && \
+    apt-get clean && \
+    gem install bundler && \
+    rm -f /etc/ImageMagick-6/policy.xml && \
+    chown 10001:10001 /app
 
-COPY . /app
+COPY --chown=10001:10001 Gemfile* ./
 
-# add encription key to decode secrets
-ARG RAILS_MASTER_KEY
+RUN bundle install && \
+    rm -rf /tmp/* /var/tmp/* /root/.bundle/cache/* /usr/local/bundle/cache/*.gem
 
-# precompile rails assets and remove file limits for ImageMagick for builds that calculate lots of diffs
-RUN rake assets:precompile && rm -f /etc/ImageMagick-6/policy.xml
+USER 10001
+COPY --chown=10001:10001  . ./
+# Precompile rails assets
+RUN rake assets:precompile
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]
