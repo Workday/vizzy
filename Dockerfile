@@ -2,6 +2,7 @@
 FROM ruby:2.3.7 AS base
 LABEL maintainer="Scott Bishop - ScottBishop70@gmail.com"
 
+ARG RAILS_MASTER_KEY=""
 ENV BUILD_PACKAGES="build-essential checkinstall libx11-dev libmagic-dev libpq-dev libmagick++-dev"
 
 WORKDIR /app
