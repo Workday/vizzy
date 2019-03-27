@@ -72,7 +72,7 @@ class DiffsController < ApplicationController
       description: "#{@diff.build.project.vizzy_server_url}/diffs/#{@diff.id}",
       project: jira_project,
       component: jira_component,
-      title: "Visual Automation Test Issue: #{@diff.old_image.test.name}",
+      title: "Vizzy Issue: #{@diff.old_image.test.ancestry_key}",
       diff_id: @diff.id,
       jira_base_url: jira_base_url
     }
