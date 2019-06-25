@@ -25,7 +25,7 @@ Vizzy is built with a plugin architecture. Plugins implement build hooks (build_
 
 ## Getting Started
 ### Prerequisites
-Ruby 2.3.1 and Rails 5.1.4. See http://installrails.com/ for install instructions.
+Ruby 2.3.7 and Rails 5.1.6.2. See http://installrails.com/ for install instructions.
 
 #### Install ImageMagick and PostgreSQL
 Install ImageMagick, a command line image processing tool (version 6 is required as the latest version causes bundle install to fail):
@@ -46,7 +46,7 @@ PostgreSQL is a database server, so you'll need to start it up to run Vizzy.
 ### Setup
 Fork the repository. Then clone your fork: `git clone https://github.com/<your-name>/vizzy.git`
 
-Vizzy uses Rails 5.1 encrypted secrets for its configuration. From the Vizzy project directory, run these commands
+Vizzy uses Rails 5.1.6.2 encrypted secrets for its configuration. From the Vizzy project directory, run these commands
 
 Generate the encrypted secrets file and key.
 
