@@ -36,3 +36,36 @@ helm install . \
     --set postgresql.postgresPassword=******** \
     --set postgresql.postgresDatabase=vizzy
  ```
+ 
+You could also override values in a .yaml file and then every time you want to upgrade, you can run:
+
+```bash
+helm upgrade -i -f vizzy.yaml /vizzy
+```
+
+where vizzy.yaml looks like 
+
+```yaml
+# Default values for vizzy.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: dockerhub.com/scottcbishop/vizzy
+  tag: v3.4.2
+  pullPolicy: IfNotPresent
+  pullSecret: dockerhub.com
+  
+env:
+  vizzyUri:
+    name: VIZZY_URI
+
+service:
+  type: ClusterIP
+
+nginxIngress:
+  enabled: true
+
+postgresql:
+  enabled: true
+```
