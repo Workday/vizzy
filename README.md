@@ -171,22 +171,7 @@ Travis CI publishes the latest master image to [Docker Hub](https://hub.docker.c
 We recommend a tool called [Kubernetes](https://kubernetes.io/docs/home/) (k8s), an opened sourced container cluster manager originally designed by Google, now owned by Cloud Native Computing. This tool aims to 
 provide a platform for automating deployment, scaling, and operations of application containers across clusters of hosts.
 
-Kubernetes scripts are provided in the [k8s](./k8s) folder. Here is an example for running the k8s deployment script. 
-
-*NOTE*: some parameters will come from the Continuous Integration (CI) build system such as $GIT_COMMIT.
-
-```sh
-API_SERVER=https://kubernetes-api-server.com
-NAMESPACE=vizzy
-REPLICA_PODS=5
-VIZZY_URI=vizzy.com
-MEMORY="8Gi"
-RAILS_ENV=production
-DOCKER_REGISTRY=dockerhub.com
-RUN_TESTS=false
-
-./deploy-vizzy.sh --api-server=$API_SERVER --bearer-token=$BEARER --rails-env=$RAILS_ENV --vizzy-version=$GIT_COMMIT --namespace=$NAMESPACE --vizzy-uri=$VIZZY_URI --replica-pods=$REPLICA_PODS --memory=$MEMORY --docker-registry=$DOCKER_REGISTRY --run-tests=$RUN_TESTS
-```
+Helm, a tool used for Kubernetes deployments, is recommended for deployment and the chart is provided at in [vizzy](./vizzy). More information on how to deploy Vizzy with helm can be found [here](./vizzy/README.md)
 
 Vizzy scales well, we use 5 replica pods each with 8Gi memory. 
 
@@ -210,7 +195,9 @@ To get complete the setup of the database you need to run the rails migrations
 
 You should now be able to see Vizzy running at https://[your-app-name-here].herokuapp.com/
 
-### Our Current Deployment Setup
+### Deployment Setup
+
+Deployment infrastructure depends on the size of the team, for a team of 30, we use
 
 1 Pod for Postgres database
 5 Pods for the Vizzy server
@@ -220,6 +207,10 @@ All pods are assigned an IP/Host in the data center and share:
 - A persistent volume (PVC - on the main host machine) which is mounted on every pod. All pods read and write images with this volume so as a user, no matter which of the 5 pods you connect to, images will 
 all be loaded correctly.
 - A single Postgres database shared for all pods.
+
+If deployed on AWS, you can use [Amazon RDS] (https://aws.amazon.com/rds/postgresql/) for the database pod.
+
+Once deployed, you can start adding Vizzy to your continuous integration builds.
 
 ## Add Upload Step to Continuous Integration Builds
 
