@@ -126,6 +126,11 @@ From the Vizzy project directory run
 
 `rake db:create db:migrate`
 
+### Start the server
+From the Vizzy project directory run
+
+`rails server`
+
 ### Create a Vizzy Project and Test User
 
 Vizzy projects allow you to run visual automation on multiple branches (ex. Master, Develop), each branch represented by a project. Each project has its own set of base images. There is typically a one to one mapping of a build plan to a Vizzy project. NOTE: Pull Requests opened against the master branch should be uploaded to the master Vizzy project so the correct set of base images are used to calculated the diffs.  
