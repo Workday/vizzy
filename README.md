@@ -11,7 +11,7 @@ Vizzy is a powerful Ruby on Rails web server that facilitates Visual Automation,
 
 The process Vizzy goes through is as follows:
 
-1. First a test suite is run against the master branch. This generates a set of images which becomes the baseline to test against. These "Base Images" are uploaded and managed by Vizzy. 
+1. First a test suite is run against the master branch. This generates a set of images which becomes the baseline to test against. These "Base Images" are uploaded and managed by Vizzy.
 
 2. Then for every subsequent pull request changeset, the same test suite runs and generates a new set of images called "Test Images". MD5 hashes are created from the images so only the images that are different from their base image get uploaded. Vizzy goes through each matching test, which contains two images, one base image and one test image, and performs a pixel by pixel diff of the two images using a tool called [ImageMagick](https://rubygems.org/gems/rmagick/versions/2.15.4). A third image is generated which highlights the differences in red. 
 
@@ -42,6 +42,12 @@ Install the PostgreSQL database:
 PostgreSQL is a database server, so you'll need to start it up to run Vizzy.
 
 `brew services start postgresql`
+
+#### NOTE: Vizzy and icu4c 62
+
+Vizzy uses icu4c version 62. The default installation from brew will not work and version 62 is not listed under recents. To replace the default installation with version 62 you can run:
+
+`brew reinstall https://raw.githubusercontent.com/Homebrew/homebrew-core/575eb4bbef683551e19f329f60456b13a558132f/Formula/icu4c.rb
 
 ### Setup
 Fork the repository. Then clone your fork: `git clone https://github.com/<your-name>/vizzy.git`
