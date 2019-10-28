@@ -1,3 +1,4 @@
+apiVersion: v1
 name: vizzy
 home: https://github.com/Workday/vizzy
 version: 0.1.0
