@@ -252,8 +252,7 @@ end
 def compute_image_md5s_json(test_image_folder)
   image_md5s = {}
   traverse_directories(test_image_folder) do |ancestry, file|
-    md5 = `md5 -q #{file}`
-    md5 = md5.tr("\n", '').to_s
+    md5 = Digest::MD5.file(file).hexdigest
     image_md5s[ancestry] = md5
   end
   { count: image_md5s.size, json: image_md5s.to_json }
