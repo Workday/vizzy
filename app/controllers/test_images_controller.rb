@@ -69,7 +69,7 @@ class TestImagesController < ApplicationController
     new_image_diffs.each { |diff| diff.destroy }
 
 
-    @test_image.destroy
+    @test_image.destroy!
 
     redirect_to test_images_path
   end
