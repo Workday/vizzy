@@ -193,8 +193,8 @@ GEM
     pg (0.21.0-x64-mingw32)
     pg (0.21.0-x86-mingw32)
     public_suffix (3.0.2)
-    puma (3.10.0)
-    puma (3.10.0-java)
+    puma (3.12.4)
+    puma (3.12.4-java)
     rack (2.0.6)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -379,7 +379,7 @@ DEPENDENCIES
   net-ldap
   paperclip
   pg
-  puma (~> 3.0)
+  puma (~> 3.12.4)
   rails (~> 5.1.6.2)
   rails-controller-testing
   rails_12factor
@@ -403,4 +403,4 @@ RUBY VERSION
    ruby 2.3.7p456
 
 BUNDLED WITH
-   1.16.1
+   2.0.2
