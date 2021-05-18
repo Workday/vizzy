@@ -144,7 +144,9 @@ GEM
     mime-types (3.2.2)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2018.0812)
-    mimemagic (0.3.2)
+    mimemagic (0.3.10)
+      nokogiri (~> 1)
+      rake
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
     minitest (5.11.3)
@@ -191,8 +193,10 @@ GEM
     pg (0.21.0-x64-mingw32)
     pg (0.21.0-x86-mingw32)
     public_suffix (3.0.2)
-    puma (3.12.4)
-    puma (3.12.4-java)
+    puma (4.3.8)
+      nio4r (~> 2.0)
+    puma (4.3.8-java)
+      nio4r (~> 2.0)
     rack (2.0.8)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -377,7 +381,7 @@ DEPENDENCIES
   net-ldap
   paperclip
   pg
-  puma (~> 3.12)
+  puma (~> 4.3)
   rails (~> 5.1.6.2)
   rails-controller-testing
   rails_12factor
