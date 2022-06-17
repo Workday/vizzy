@@ -63,7 +63,7 @@ gem 'net-ldap'
 gem 'pg'
 
 # Use for translations
-gem 'i18n', '0.7.0'
+gem 'i18n', '0.8.0'
 
 # Ability for models have a tree structure (hierarchy)
 gem 'ancestry'
